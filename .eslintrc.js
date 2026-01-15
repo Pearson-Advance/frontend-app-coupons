@@ -1,18 +1,38 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { createConfig } = require('@openedx/frontend-build');
+const { createConfig } = require('@edx/frontend-build');
 
-module.exports = createConfig(
-  'eslint',
-  {
-    rules: {
-      'jsx-a11y/label-has-associated-control': [2, {
-        controlComponents: ['Input'],
-      }],
-      'template-curly-spacing': 'off',
-      'react-hooks/exhaustive-deps': 'off',
-      'no-restricted-exports': 'off',
-      // There is no reason to disallow this syntax anymore; we don't use regenerator-runtime in new browsers
-      'no-restricted-syntax': 'off',
+module.exports = createConfig('eslint', {
+  overrides: [
+    {
+      files: ['*.tsx'],
+      rules: {
+        'react/jsx-filename-extension': [
+          'error',
+          { extensions: ['.jsx', '.tsx'] },
+        ],
+      },
+    },
+  ],
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+      },
+      webpack: {
+        config: 'webpack.prod.config.js',
+      },
     },
   },
-);
+  rules: {
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+  },
+});
