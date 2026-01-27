@@ -1,0 +1,34 @@
+// Layout dimensions
+$header-height: 76px;
+$footer-height: 142px;
+
+// Base colors
+$color-white: #FFFFFF;
+$color-transparent: transparent;
+
+// Black scale
+$black-2: #010008;
+$black-3: #514F57;
+
+// Neutral palette
+$neutral-400: #C2C2C2;
+$neutral-500: #B9B8BF;
+$neutral-700: #514F57;
+$neutral-800: #2D2B33;
+
+// Brand / primary colors
+$primary-800: #330B77;
+$purple-800: #73006C;
+$background-color-purple: #512EAB;
+
+// Backgrounds
+$background-color: #EFEEF7;
+
+// Complementary colors
+$complementary-100: #DCF9F9;
+
+// UI tokens
+$color-divider: var(--pgn-color-gray-300);
+$color-chip-bg: var(--pgn-color-primary-100);
+$color-chip-text: var(--pgn-color-primary-500);
+$color-hover-bg: var(--pgn-color-gray-100);
