@@ -10,6 +10,7 @@ import FilterSection from 'features/browsing/components/FilterSection';
 
 import messages from 'features/browsing/messages';
 import { CatalogContext } from 'app/providers/CatalogProvider';
+import CourseCard from 'features/browsing/components/CourseCard';
 import './index.scss';
 
 const RemoveIcon = () => <FontAwesomeIcon icon={faXmark} />;
@@ -107,7 +108,15 @@ const Browsing = () => {
           </div>
         </aside>
 
-        <div className="div-results">content</div>
+        <div className="div-results">
+          <CourseCard
+            imageUrl="https://picsum.photos/id/237/200/300"
+            title="AWS Certified Security Specialty (SCS-C02)"
+            vendor="AWS"
+            duration="24 hours"
+            enrolmentUrl="https://example.com/enroll"
+          />
+        </div>
       </section>
     </main>
   );
