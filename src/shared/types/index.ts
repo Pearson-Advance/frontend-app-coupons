@@ -14,6 +14,8 @@ export type Vendor = CatalogItem;
 
 export type CatalogContextType = {
   vendors: Vendor[];
+  topics: Topic[];
+  setTopics: React.Dispatch<React.SetStateAction<Topic[]>>;
   setVendors: React.Dispatch<React.SetStateAction<Vendor[]>>;
   clearAll: () => void;
   search: string;
