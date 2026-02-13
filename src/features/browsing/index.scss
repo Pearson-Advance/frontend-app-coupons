@@ -1,0 +1,232 @@
+@import '~@edx/paragon/scss/core/core';
+@import 'assets/variables';
+
+/* Layout */
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - $header-height - $footer-height);
+  padding: .4em;
+  background-color: $background-color;
+}
+
+.section-content {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.div-filters {
+  width: 350px;
+  margin-right: 1em;
+  padding: 1em 1em 0;
+}
+
+.div-results {
+  flex: 1;
+}
+
+/* Catalog filters */
+
+.catalog-filters-container {
+  width: 100%;
+
+  .divider {
+    border: 0;
+    border-top: 1px solid $color-divider;
+    margin: 1.5em 0;
+  }
+
+  .active-filters-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+
+    .pgn-chip {
+      background-color: $color-chip-bg;
+      color: $color-chip-text;
+      font-weight: 500;
+    }
+  }
+}
+
+/* Filters */
+
+.filter-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-collapsible {
+  font-weight: 300;
+  color: $black-2;
+
+  .collapsible-trigger {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    text-decoration: none !important;
+    color: $neutral-800 !important;
+
+    .collapsible-icon {
+      font-size: 10px !important;
+    }
+  }
+}
+
+.h4-filter-by {
+  color: $neutral-800 !important;
+}
+
+.button-clear-filters {
+  color: $neutral-500 !important;
+}
+
+.button-display-toggle {
+  width: fit-content;
+  color: $background-color-purple !important;
+}
+
+/* Checkbox */
+
+.checkbox-option {
+  position: relative;
+}
+
+.checkbox-icon {
+  position: absolute;
+  left: 3px;
+  font-size: 12px;
+  color: $color-white;
+}
+
+.pgn__form-checkbox-input {
+  margin-right: 10px;
+  border-width: 1.5px;
+  border-radius: 4px !important;
+  border-color: $black-3;
+
+  &:checked {
+    background-image: none !important;
+    background-color: $background-color-purple !important;
+    border-color: $background-color-purple !important;
+  }
+}
+
+/* Chips */
+
+.pgn__chip {
+  padding: 0 10px;
+  border-radius: 20px !important;
+  background-color: $complementary-100 !important;
+
+  &__label {
+    font-weight: 600;
+    color: $background-color-purple !important;
+  }
+
+  &__icon-after {
+    .pgn__icon {
+      width: 10px !important;
+      color: $black-3 !important;
+    }
+
+    &:hover {
+      background-color: $color-transparent !important;
+    }
+  }
+}
+
+/* Mobile */
+
+.mobile-filters {
+  margin-bottom: 1.5em;
+
+  .collapsible-card {
+    border: 1px solid $color-divider;
+    border-radius: 8px;
+    background-color: $color-white;
+    overflow: hidden;
+  }
+
+  .collapsible-trigger {
+    padding: 1em;
+    font-weight: 600;
+    background-color: $color-white;
+
+    &:hover {
+      background-color: $color-hover-bg;
+    }
+  }
+}
+
+.filter-mobile-icon {
+  span {
+    color: $neutral-700;
+  }
+
+  i {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 30px;
+    border-radius: 50%;
+    background-color: rgba($purple-800, 10%);
+    color: $purple-800;
+  }
+}
+
+.span-filter-counter {
+  margin-right: 20px;
+  font-weight: 400;
+  color: $primary-800;
+}
+
+.react-select__menu {
+  position: relative !important;
+}
+
+/* Responsive */
+
+@media (width <= map-get($grid-breakpoints, md)) {
+  .section-content {
+    flex-direction: column;
+  }
+
+  .div-filters {
+    width: 100%;
+    margin: 0 0 1em;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .desktop-filters,
+  .filters-separator,
+  .filter-collapsible {
+    display: none;
+  }
+
+  .mobile-filters .collapsible-icon {
+    display: none;
+  }
+}
+
+@media (
+  map-get($grid-breakpoints, sm)
+  <= width
+  <= map-get($grid-breakpoints, md)
+) {
+  .catalog-filters-container {
+    width: 50%;
+  }
+}
+
+@media (width >= map-get($grid-breakpoints, md)) {
+  .basic-multi-select,
+  .mobile-filters {
+    display: none;
+  }
+}
+
