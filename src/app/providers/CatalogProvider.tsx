@@ -9,11 +9,14 @@ import { CatalogContextType, CatalogItem } from 'shared/types';
 
 export const CatalogContext = createContext<CatalogContextType>({
   vendors: [],
+  search: '',
+  setSearch: () => {},
   setVendors: () => {},
   clearAll: () => {},
 });
 
 export const CatalogProvider = ({ children }: { children: ReactNode }) => {
+  const [search, setSearch] = useState<string>('');
   const [vendors, setVendors] = useState<CatalogItem[]>([]);
 
   const handleClearAll = () => {
@@ -23,10 +26,12 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
   const value = useMemo(
     () => ({
       vendors,
+      search,
       setVendors,
+      setSearch,
       clearAll: handleClearAll,
     }),
-    [vendors],
+    [vendors, search],
   );
 
   return (

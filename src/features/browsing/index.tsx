@@ -6,6 +6,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { CatalogItem, ItemType } from 'shared/types';
 import { FILTER_ITEM_TYPES, VENDORS } from 'shared/constants';
+import SearchBar from 'features/browsing/components/SearchBar';
 import FilterSection from 'features/browsing/components/FilterSection';
 
 import messages from 'features/browsing/messages';
@@ -46,6 +47,7 @@ const Browsing = () => {
 
   return (
     <main className="main-layout">
+      <SearchBar />
       <section className="section-content">
         <aside className="div-filters">
           <div className="catalog-filters-container">
