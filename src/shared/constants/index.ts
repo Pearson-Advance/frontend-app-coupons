@@ -1,4 +1,4 @@
-import { Vendor } from 'shared/types';
+import { Vendor, Topic } from 'shared/types';
 
 /*
   We use `as const` to make this object immutable and preserve literal types.
@@ -23,4 +23,17 @@ export const VENDORS: ReadonlyArray<Vendor> = [
   { id: 'n-a', name: 'N/A' },
   { id: 'pmi', name: 'PMI' },
   { id: 'vmware', name: 'VMware' },
+];
+
+export const TOPICS: ReadonlyArray<Topic> = [
+  { id: 'ai', name: 'AI' },
+  { id: 'career-success', name: 'Career Success' },
+  { id: 'cloud', name: 'Cloud' },
+  { id: 'cybersecurity', name: 'Cybersecurity' },
+  { id: 'data-analytics', name: 'Data / Analytics' },
+  { id: 'networking', name: 'Networking' },
+  { id: 'operating-systems', name: 'Operating Systems' },
+  { id: 'programming-and-coding', name: 'Programming and Coding' },
+  { id: 'project-program-management', name: 'Project & Program Management' },
+  { id: 'technology-fundamentals', name: 'Technology Fundamentals' },
 ];

@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { CatalogItem, ItemType } from 'shared/types';
-import { FILTER_ITEM_TYPES, VENDORS } from 'shared/constants';
 import SearchBar from 'features/browsing/components/SearchBar';
+import { FILTER_ITEM_TYPES, TOPICS, VENDORS } from 'shared/constants';
 import FilterSection from 'features/browsing/components/FilterSection';
 
 import messages from 'features/browsing/messages';
@@ -19,30 +19,41 @@ const RemoveIcon = () => <FontAwesomeIcon icon={faXmark} />;
 const Browsing = () => {
   const intl = useIntl();
   const {
+    topics,
     vendors,
+    setTopics,
     setVendors,
     clearAll,
   } = useContext(CatalogContext);
 
-  const totalSelected = vendors.length;
+  const totalSelected = topics.length + vendors.length;
 
   const chips: Array<CatalogItem & { type: ItemType }> = [
+    ...topics.map((item) => ({ ...item, type: FILTER_ITEM_TYPES.TOPICS })),
     ...vendors.map((item) => ({ ...item, type: FILTER_ITEM_TYPES.VENDORS })),
   ];
 
-  const removeItem = (id: string) => {
+  const removeItem = (type: ItemType, id: string) => {
     const updater = (items: CatalogItem[]) => items.filter((i) => i.id !== id);
 
-    return setVendors(updater);
+    return type === FILTER_ITEM_TYPES.TOPICS ? setTopics(updater) : setVendors(updater);
   };
 
   const renderFilters = () => (
-    <FilterSection
-      title="Vendors"
-      items={VENDORS}
-      selectedItems={vendors}
-      onSelectionChange={setVendors}
-    />
+    <>
+      <FilterSection
+        title="Topics"
+        items={TOPICS}
+        selectedItems={topics}
+        onSelectionChange={setTopics}
+      />
+      <FilterSection
+        title="Vendors"
+        items={VENDORS}
+        selectedItems={vendors}
+        onSelectionChange={setVendors}
+      />
+    </>
   );
 
   return (
@@ -92,11 +103,11 @@ const Browsing = () => {
 
               {!!totalSelected && (
                 <div className="active-filters-chips mb-3">
-                  {chips.map(({ id, name }) => (
+                  {chips.map(({ id, name, type }) => (
                     <Chip
                       key={id}
                       iconAfter={RemoveIcon}
-                      onIconAfterClick={() => removeItem(id)}
+                      onIconAfterClick={() => removeItem(type, id)}
                       iconAfterAlt="remove"
                     >
                       {name}
