@@ -1,0 +1,26 @@
+
+@import '~@edx/paragon/scss/core/core';
+@import 'assets/variables';
+
+.catalog-error-page {
+  min-height: calc(100vh - $header-height - $footer-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.catalog-error-page h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.catalog-error-page p {
+  max-width: 520px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $black-3;
+}

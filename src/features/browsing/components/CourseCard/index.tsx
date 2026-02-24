@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Button } from 'react-paragon-topaz';
+import { Skeleton } from '@edx/paragon';
 
 import messages from './messages';
 import './index.scss';
@@ -11,53 +12,68 @@ type CourseCardProps = {
   vendor?: string;
   duration?: string;
   enrolmentUrl?: string;
+  isLoading?: boolean;
 };
 
 const CourseCard = ({
   imageUrl = '',
   title = '',
-  vendor = 'N/A',
-  duration = 'N/A',
+  vendor = '',
+  duration = '',
   enrolmentUrl = '#',
+  isLoading = false,
 }: CourseCardProps) => {
   const intl = useIntl();
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div className="course-card">
+    <div className="mb-3 course-card">
       <div className="course-card__image">
-        {imageUrl && !imageError ? (
+        {isLoading && <Skeleton className="course-card__image-skeleton" />}
+
+        {!isLoading && imageUrl && !imageError && (
           <img
             src={imageUrl}
             alt={title}
             onError={() => setImageError(true)}
           />
-        ) : (
-          <div className="course-card__image-fallback" />
+        )}
+
+        {!isLoading && (!imageUrl || imageError) && (
+        <div className="course-card__image-fallback" />
         )}
       </div>
 
       <div className="course-card__content">
-        <span className="course-card__vendor">{vendor}</span>
+        <span className="course-card__vendor">
+          {isLoading ? <Skeleton width={50} /> : vendor }
+        </span>
 
         <h3 className="course-card__title" title={title}>
-          {title}
+          {isLoading ? <Skeleton width={350} /> : title}
         </h3>
 
         <div className="course-card__meta">
-          <span>{duration}</span>
+          <span>{isLoading ? <Skeleton width={70} /> : duration}</span>
         </div>
 
       </div>
-      <Button
-        as="a"
-        href={enrolmentUrl}
-        className="course-card__button"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {intl.formatMessage(messages.enroll)}
-      </Button>
+      {
+        isLoading ? (
+          <Skeleton width={234} height={48} />
+        )
+          : (
+            <Button
+              as="a"
+              href={enrolmentUrl}
+              className="course-card__button"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {intl.formatMessage(messages.enroll)}
+            </Button>
+          )
+      }
     </div>
   );
 };

@@ -5,6 +5,8 @@ module.exports = createConfig('webpack-prod', {
   resolve: {
     alias: {
       features: path.resolve(__dirname, 'src/features'),
+      hooks: path.resolve(__dirname, 'src/hooks'),
+      api: path.resolve(__dirname, 'src/api'),
       i18n: path.resolve(__dirname, 'src/i18n'),
       app: path.resolve(__dirname, 'src/app'),
       shared: path.resolve(__dirname, 'src/shared'),

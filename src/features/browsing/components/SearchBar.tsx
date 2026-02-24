@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Spinner } from '@edx/paragon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,24 +7,24 @@ import { faArrowRight, faSearch, faXmark } from '@fortawesome/free-solid-svg-ico
 import { CatalogContext } from 'app/providers/CatalogProvider';
 import messages from './messages';
 
-type SubmitButtonProps = {
+type InputButtonsProps = {
   disabled: boolean;
   clearInput?: () => void;
 };
 
-const InputButtons = ({ disabled, clearInput }: SubmitButtonProps) => (
+const InputButtons = ({ disabled, clearInput }: InputButtonsProps) => (
   <div className="d-flex">
     {
-      !disabled && (
-        <button
-          type="button"
-          className="search-clear-button"
-          onClick={clearInput}
-        >
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
-      )
-    }
+    !disabled && (
+      <button
+        type="button"
+        className="search-clear-button"
+        onClick={clearInput}
+      >
+        <FontAwesomeIcon icon={faXmark} />
+      </button>
+    )
+}
 
     <button
       type="submit"
@@ -39,26 +39,28 @@ const InputButtons = ({ disabled, clearInput }: SubmitButtonProps) => (
 
 const SearchBar = () => {
   const { formatMessage } = useIntl();
-  const [loading, setLoading] = useState(false);
-  const { search, setSearch } = useContext(CatalogContext);
-  const isDisabled = loading || search.trim().length === 0;
+  const {
+    search,
+    setSearch,
+    commitSearch,
+    isLoading,
+  } = useContext(CatalogContext);
 
-  const handleInputClear = () => setSearch('');
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value);
+  const isDisabled = isLoading || search.trim().length === 0;
+
+  const handleInputClear = () => {
+    setSearch('');
+    commitSearch('');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   const submitSearch = (e: React.FormEvent) => {
-    if (isDisabled) { return; }
-
     e.preventDefault();
-
-    setLoading(true);
-
-    // eslint-disable-next-line no-console
-    console.log('Search value:', search.trim());
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+    if (isDisabled) { return; }
+    commitSearch();
   };
 
   return (
@@ -73,10 +75,10 @@ const SearchBar = () => {
             <Form.Control
               value={search}
               onChange={handleInputChange}
-              disabled={loading}
+              disabled={isLoading}
               leadingElement={<FontAwesomeIcon icon={faSearch} />}
               trailingElement={
-                loading ? (
+                isLoading ? (
                   <Spinner
                     animation="border"
                     variant="light"
