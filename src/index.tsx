@@ -22,9 +22,10 @@ import Header from '@edx/frontend-component-header';
 
 import appMessages from 'i18n';
 import Browsing from 'features/browsing';
+import Details from 'features/details';
 import CouponError from 'features/error';
 import { CatalogProvider } from 'app/providers/CatalogProvider';
-import validateUuid from 'shared/helpers';
+import { validateUuid } from 'shared/helpers';
 
 import './index.scss';
 
@@ -51,7 +52,7 @@ const queryClient = new QueryClient();
  * - No invalid API calls are triggered.
  * - The application fails fast and predictably.
  */
-function renderValidatedCatalogRoute(match, location) {
+function renderValidatedCatalogRoute(match, location, Component) {
   const params = new URLSearchParams(location.search);
   const hasCouponParam = params.has('coupon_code');
   const couponCode = params.get('coupon_code');
@@ -65,7 +66,7 @@ function renderValidatedCatalogRoute(match, location) {
 
   return (
     <CatalogProvider>
-      <Browsing />
+      <Component />
     </CatalogProvider>
   );
 }
@@ -84,7 +85,12 @@ subscribe(APP_READY, () => {
               <Route
                 exact
                 path="/:catalogID"
-                render={({ match, location }) => renderValidatedCatalogRoute(match, location)}
+                render={({ match, location }) => renderValidatedCatalogRoute(match, location, Browsing)}
+              />
+              <Route
+                exact
+                path="/:catalogID/:courseKey"
+                render={({ match, location }) => renderValidatedCatalogRoute(match, location, Details)}
               />
               <Redirect to="/error" />
             </Switch>

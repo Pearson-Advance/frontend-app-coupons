@@ -1,3 +1,7 @@
+import React from 'react';
+import parse from 'html-react-parser';
+import DOMPurify from 'dompurify';
+
 const UUID_REGEX: RegExp = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/i;
 
 /**
@@ -18,8 +22,14 @@ const UUID_REGEX: RegExp = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][
  * Adapted from uuidjs implementation:
  * https://github.com/uuidjs/uuid/blob/main/src/validate.ts#L3
  */
-function validateUuid(uuid: unknown) {
+export function validateUuid(uuid: unknown) {
   return typeof uuid === 'string' && UUID_REGEX.test(uuid);
 }
 
-export default validateUuid;
+/** Sanitise and parse an HTML string into React elements safely. */
+export const parseHtml = (html?: string): React.ReactNode => {
+  if (!html) { return null; }
+  const clean = DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+
+  return parse(clean);
+};

@@ -186,6 +186,7 @@ const Browsing = () => {
               vendor={course.topics[0]}
               imageUrl={course.card_image_url}
               enrolmentUrl={course.enrollment_url ?? '#'}
+              courseKey={course.key}
             />
           ))}
 

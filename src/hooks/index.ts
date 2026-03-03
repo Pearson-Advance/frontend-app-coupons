@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import fetchCourses from 'api/catalog';
 import { CatalogItem } from 'shared/types';
 import { PAGE_SIZE } from 'shared/constants';
-import validateUuid from 'shared/helpers';
+import { validateUuid } from 'shared/helpers';
 
 const useCourses = (
   catalogID: string,

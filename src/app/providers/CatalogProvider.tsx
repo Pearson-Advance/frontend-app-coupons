@@ -11,11 +11,7 @@ import { useParams, useLocation } from 'react-router-dom';
 
 import useCourses from 'hooks';
 import { PAGE_SIZE } from 'shared/constants';
-import { CatalogContextType, CatalogItem } from 'shared/types';
-
-interface RouteParams {
-  catalogID?: string;
-}
+import { CatalogContextType, CatalogItem, RouteParams } from 'shared/types';
 
 interface CommittedFilters {
   search: string;
@@ -178,6 +174,7 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
       data,
       isLoading,
       isError,
+      setPageSize,
       setTopics,
       setVendors,
       setPage,

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Button } from 'react-paragon-topaz';
 import { Skeleton } from '@edx/paragon';
+import { Link, useParams, useLocation } from 'react-router-dom';
 
 import messages from './messages';
 import './index.scss';
@@ -13,6 +14,7 @@ type CourseCardProps = {
   duration?: string;
   enrolmentUrl?: string;
   isLoading?: boolean;
+  courseKey?: string;
 };
 
 const CourseCard = ({
@@ -22,9 +24,15 @@ const CourseCard = ({
   duration = '',
   enrolmentUrl = '#',
   isLoading = false,
+  courseKey,
 }: CourseCardProps) => {
   const intl = useIntl();
   const [imageError, setImageError] = useState(false);
+  const { catalogID } = useParams<{catalogID: string}>();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const couponCode = params.get('coupon_code');
 
   return (
     <div className="mb-3 course-card">
@@ -40,40 +48,43 @@ const CourseCard = ({
         )}
 
         {!isLoading && (!imageUrl || imageError) && (
-        <div className="course-card__image-fallback" />
+          <div className="course-card__image-fallback" />
         )}
       </div>
 
       <div className="course-card__content">
-        <span className="course-card__vendor">
-          {isLoading ? <Skeleton width={50} /> : vendor }
-        </span>
+        {vendor && (
+          <span className="course-card__vendor">
+            {isLoading ? <Skeleton width={50} /> : vendor}
+          </span>
+        )}
 
-        <h3 className="course-card__title" title={title}>
+        <Link
+          to={`/${catalogID}/${courseKey}?coupon_code=${couponCode}`}
+          className="course-card__title"
+          disabled={!courseKey || isLoading}
+        >
           {isLoading ? <Skeleton width={350} /> : title}
-        </h3>
+        </Link>
 
-        <div className="course-card__meta">
-          <span>{isLoading ? <Skeleton width={70} /> : duration}</span>
-        </div>
-
+        {duration && (
+          <div className="course-card__meta">
+            <span>{isLoading ? <Skeleton width={70} /> : duration}</span>
+          </div>
+        )}
       </div>
-      {
-        isLoading ? (
-          <Skeleton width={234} height={48} />
-        )
-          : (
-            <Button
-              as="a"
-              href={enrolmentUrl}
-              className="course-card__button"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {intl.formatMessage(messages.enroll)}
-            </Button>
-          )
-      }
+
+      {!isLoading && enrolmentUrl && (
+        <Button
+          as="a"
+          href={enrolmentUrl}
+          className="course-card__button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {intl.formatMessage(messages.enroll)}
+        </Button>
+      )}
     </div>
   );
 };
