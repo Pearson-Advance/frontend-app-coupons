@@ -1,12 +1,23 @@
 import { useContext } from 'react';
-import { Button, Chip, Collapsible } from '@edx/paragon';
+import {
+  Button,
+  Chip,
+  Collapsible,
+  Pagination,
+} from '@edx/paragon';
 import { useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { CatalogItem, ItemType } from 'shared/types';
 import SearchBar from 'features/browsing/components/SearchBar';
-import { FILTER_ITEM_TYPES, TOPICS, VENDORS } from 'shared/constants';
+import {
+  FILTER_ITEM_TYPES,
+  TOPICS,
+  VENDORS,
+  PAGE_SIZE_OPTIONS,
+  PAGE_SIZE,
+} from 'shared/constants';
 import FilterSection from 'features/browsing/components/FilterSection';
 
 import messages from 'features/browsing/messages';
@@ -19,10 +30,17 @@ const RemoveIcon = () => <FontAwesomeIcon icon={faXmark} />;
 const Browsing = () => {
   const intl = useIntl();
   const {
+    pageSize,
     topics,
     vendors,
+    page,
+    data,
+    isLoading,
+    isError,
     setTopics,
     setVendors,
+    setPage,
+    setPageSize,
     clearAll,
   } = useContext(CatalogContext);
 
@@ -38,6 +56,11 @@ const Browsing = () => {
 
     return type === FILTER_ITEM_TYPES.TOPICS ? setTopics(updater) : setVendors(updater);
   };
+
+  const pageCount = Math.ceil((data?.count ?? 0) / PAGE_SIZE);
+  const hasNavigation = (data?.next !== null || data?.previous !== null) && data?.count && data?.count > 0;
+  const start = (page - 1) * pageSize + 1;
+  const end = Math.min(page * pageSize, data?.count ?? 0);
 
   const renderFilters = () => (
     <>
@@ -84,8 +107,8 @@ const Browsing = () => {
             </div>
 
             <div className="desktop-filters">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h3 className="h4 m-0 h4-filter-by">
+              <div className="mb-3 d-flex justify-content-between align-items-center">
+                <h3 className="m-0 h4 h4-filter-by">
                   {intl.formatMessage(messages.filterBy)}
                 </h3>
 
@@ -102,7 +125,7 @@ const Browsing = () => {
               </div>
 
               {!!totalSelected && (
-                <div className="active-filters-chips mb-3">
+                <div className="mb-3 active-filters-chips">
                   {chips.map(({ id, name, type }) => (
                     <Chip
                       key={id}
@@ -121,14 +144,80 @@ const Browsing = () => {
           </div>
         </aside>
 
-        <div className="div-results">
-          <CourseCard
-            imageUrl="https://picsum.photos/id/237/200/300"
-            title="AWS Certified Security Specialty (SCS-C02)"
-            vendor="AWS"
-            duration="24 hours"
-            enrolmentUrl="https://example.com/enroll"
-          />
+        <div className="pt-2 div-results">
+          {!isLoading && data?.results?.length > 0 && (
+            <p>
+              {intl.formatMessage(messages.resultsCount, { start, end, count: data.count })}
+            </p>
+          )}
+
+          {isLoading && Array.from({ length: 5 }, (_, i) => i + 1).map((i) => (
+            <CourseCard key={i} isLoading />
+          ))}
+
+          {((!isLoading && isError) || (!isLoading && !data?.results)) && (
+            <div className="flex-column d-flex">
+              <p>
+                {intl.formatMessage(messages.errorMessageWithCount)}
+              </p>
+              <h3>{intl.formatMessage(messages.errorTitle)}</h3>
+              <p>
+                {intl.formatMessage(messages.errorMessage)}
+              </p>
+            </div>
+          )}
+
+          {!isLoading && !isError && data?.results?.length === 0 && (
+          <div className="flex-column d-flex">
+            <p>
+              {intl.formatMessage(messages.errorMessageWithCount)}
+            </p>
+            <h3>{intl.formatMessage(messages.emptyTitle)}</h3>
+            <p>
+              {intl.formatMessage(messages.emptyMessage)}
+            </p>
+          </div>
+          )}
+
+          {!isLoading && !isError && data?.results?.map(course => (
+            <CourseCard
+              key={course.key}
+              title={course.title}
+              vendor={course.topics[0]}
+              imageUrl={course.card_image_url}
+              enrolmentUrl={course.enrollment_url ?? '#'}
+            />
+          ))}
+
+          {!isLoading && !isError && hasNavigation && (
+            <div className="pagination-container">
+              <div className="gap-2 d-flex align-items-center">
+                <span className="text-muted small">Rows per page:</span>
+                <select
+                  value={pageSize}
+                  name="row form"
+                  onChange={(e) => setPageSize(Number(e.target.value))}
+                  className="w-auto form-select"
+                >
+                  {PAGE_SIZE_OPTIONS.map((size) => (
+                    <option key={size} value={size}>{size}</option>
+                  ))}
+                </select>
+              </div>
+              <Pagination
+                className="mb-0"
+                paginationLabel="pagination navigation"
+                pageCount={pageCount}
+                currentPage={page}
+                variant="reduced"
+                size="small"
+                onPageSelect={(selectedPage: number) => {
+                  setPage(selectedPage);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+            </div>
+          )}
         </div>
       </section>
     </main>

@@ -21,11 +21,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
+    &-skeleton {
+      width: $image-size-width !important;
+      height: $image-size-height;
+      top: -4px;
+    }
+
     img {
       width: 100%;
       height: 100%;
       border-radius: 6px;
+      min-width: $image-size-width;
+      min-height: $image-size-height;
       max-height: $image-size-height;
       max-width: $image-size-width;
       object-fit: cover;
@@ -101,6 +109,16 @@
       height: $image-size-height;
       width: $image-size-width;
 
+      &-fallback {
+        width: $image-size-width;
+        height: $image-size-height;
+      }
+
+      &-skeleton {
+        width: $image-size-width !important;
+        height: $image-size-height;
+      }
+
       img {
         max-width: $image-size-width;
         max-height: $image-size-height;
@@ -115,6 +133,28 @@
 
     &__title {
       white-space: normal;
+    }
+
+    &__button.btntpz {
+      width: 100%;
+    }
+  }
+}
+
+@media (map-get($grid-breakpoints, md) < width <= map-get($grid-breakpoints, xl)) {
+  .course-card {
+    flex-direction: column;
+    height: auto;
+    align-items: flex-start;
+
+    &__title {
+      white-space: normal;
+      overflow: visible;
+      max-width: none;
+    }
+
+    &__vendor {
+      margin-top: 1em;
     }
 
     &__button.btntpz {

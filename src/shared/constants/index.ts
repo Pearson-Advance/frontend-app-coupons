@@ -11,6 +11,9 @@ export const FILTER_ITEM_TYPES = {
   VENDORS: 'vendors',
 } as const;
 
+export const PAGE_SIZE = 10;
+export const PAGE_SIZE_OPTIONS = [10, 25, 50];
+
 export const VENDORS: ReadonlyArray<Vendor> = [
   { id: 'aws', name: 'AWS' },
   { id: 'cisco', name: 'Cisco' },
