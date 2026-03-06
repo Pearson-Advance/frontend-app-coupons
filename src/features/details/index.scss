@@ -1,0 +1,254 @@
+@import '~@edx/paragon/scss/core/core';
+@import 'assets/variables';
+
+$bp-lg: 992px;
+
+.course-details {
+  min-height: calc(100vh - $header-height - $footer-height);
+  background-color: $background-color;
+  color: $black-2;
+  position: relative;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 380px;
+    background-image: url('../../assets/svg/course-details.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  // ── Header ───────────────────────────────────────────────────────────────
+
+  &__header {
+    position: relative;
+    min-height: 380px;
+    z-index: 1;
+  }
+
+  &__header-content {
+    padding: 2em;
+  }
+
+  // ── Breadcrumb ────────────────────────────────────────────────────────────
+
+  &__breadcrumb-back {
+    cursor: pointer;
+    color: $background-color-purple !important;
+  }
+
+  &__breadcrumb-current {
+    color: $neutral-700 !important;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  // ── Header meta ───────────────────────────────────────────────────────────
+
+  &__vendor {
+    color: $neutral-700;
+    margin-top: .5em;
+  }
+
+  &__title {
+    margin-top: 1em;
+
+    &-button.btntpz {
+      width: 25%;
+      background: $color-button-bg;
+      color: $black-2;
+      border-color: transparent;
+      margin-top: 1em;
+
+      &:hover {
+        background: $color-button-bg-hover;
+        border-color: transparent;
+      }
+    }
+  }
+
+  // ── Body (two-column layout) ──────────────────────────────────────────────
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    padding: 2em;
+
+    @media (min-width: $bp-lg) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  // ── Main content column ───────────────────────────────────────────────────
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+
+    @media (min-width: $bp-lg) {
+      flex: 0 0 66.666%;
+      max-width: 66.666%;
+    }
+  }
+
+  &__section {
+    background-color: $white;
+    border-radius: 4px;
+    padding: 20px;
+    border: 1px solid $divider-300;
+  }
+
+  // ── Sidebar column ────────────────────────────────────────────────────────
+
+  &__sidebar {
+    width: 100%;
+
+    @media (min-width: $bp-lg) {
+      flex: 0 0 33.333%;
+      max-width: 33.333%;
+    }
+  }
+
+  // Single card that wraps all sidebar content
+  &__sidebar-card {
+    background-color: $white;
+    border-radius: 4px;
+    border: 1px solid $divider-300;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25em;
+  }
+
+  // Each labelled row inside the card
+  &__sidebar-item {
+    display: flex;
+    flex-direction: column;
+    gap: .25em;
+
+    // Divider between items (skip the first one)
+    & + & {
+      padding-top: 1.25em;
+      border-top: 1px solid $divider-300;
+    }
+  }
+
+  &__sidebar-label {
+    font-weight: 600;
+    font-size: .875em;
+    color: $black-2;
+  }
+
+  &__sidebar-value {
+    color: $neutral-700;
+    font-size: .9em;
+
+    // Strip default margin from parsed HTML paragraphs inside the sidebar
+    p {
+      margin: 0;
+    }
+  }
+
+  &__materials-list {
+    margin: 0;
+    padding-left: 1.25em;
+    color: $neutral-700;
+    font-size: .9em;
+  }
+
+  // ── Error state ───────────────────────────────────────────────────────────
+
+  &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3em 2em;
+  }
+
+  &__error-title {
+    margin-bottom: .5em;
+  }
+
+  &__error-message {
+    color: $neutral-700;
+    margin-bottom: 1.5em;
+  }
+
+  &__error-action {
+    margin-top: .5em;
+  }
+
+  // ── Skeleton utility gaps ─────────────────────────────────────────────────
+
+  &__skeleton-gap--sm {
+    margin-top: .5em;
+  }
+
+  &__skeleton-gap--md {
+    margin-top: 1em;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .course-details {
+    &__title-button.btntpz {
+      width: 100%;
+    }
+
+    &__header-content {
+      padding: 1em;
+    }
+
+    &__breadcrumb-current,
+    &__breadcrumb-back {
+      font-size: .9em;
+    }
+
+    &__title {
+      font-size: 1.5em;
+    }
+
+    &__body {
+      padding: .8em;
+    }
+
+    &__section {
+      h2 {
+        font-size: 1.25em;
+      }
+
+      p, ul {
+        font-size: .9em;
+      }
+    }
+  }
+}
+
+@media (width >= map-get($grid-breakpoints, md)) {
+  .course-details {
+    &::before {
+      background-position: top left;
+    }
+  }
+}
+
+@media (width >= 1970px) {
+  .course-details {
+    &::before {
+      background-position: 0 -110px;
+    }
+  }
+}

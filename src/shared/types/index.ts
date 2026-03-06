@@ -45,3 +45,22 @@ export interface CoursesResponse {
   next: string | null;
   previous: string | null;
 }
+
+export interface CourseDetailResponse {
+  title?: string;
+  vendor?: string;
+  overview?: string;
+  outline?: string;
+  prerequisites?: string;
+  learning_objectives?: string;
+  author?: string;
+  included_materials?: string[];
+  duration?: string;
+  target_audience?: string;
+  enrollment_url?: string;
+}
+
+export interface RouteParams {
+  catalogID: string;
+  courseKey?: string;
+}
