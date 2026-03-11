@@ -25,7 +25,7 @@ const Details = () => {
   const params = new URLSearchParams(location.search);
   const couponCode = params.get('coupon_code');
 
-  const handleBack = () => history.push(`/${catalogID}/?coupon_code=${couponCode}`);
+  const handleBack = () => history.push(`/catalog/${catalogID}/?coupon_code=${couponCode}`);
 
   if (isLoading) { return <PageSkeleton />; }
   if (!data || Object.keys(data).length === 0) { return <ErrorState onBack={handleBack} />; }
