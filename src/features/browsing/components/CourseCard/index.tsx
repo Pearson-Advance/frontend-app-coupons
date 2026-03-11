@@ -60,7 +60,7 @@ const CourseCard = ({
         )}
 
         <Link
-          to={`/${catalogID}/${courseKey}?coupon_code=${couponCode}`}
+          to={`/catalog/${catalogID}/${courseKey}?coupon_code=${couponCode}`}
           className="course-card__title"
           disabled={!courseKey || isLoading}
         >

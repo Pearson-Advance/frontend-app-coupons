@@ -5,6 +5,7 @@ import {
   APP_READY,
   subscribe,
   initialize,
+  getConfig,
 } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
 import ReactDOM from 'react-dom';
@@ -76,7 +77,7 @@ subscribe(APP_READY, () => {
     <IntlProvider locale="en">
       <QueryClientProvider client={queryClient}>
         <AppProvider>
-          <BrowserRouter>
+          <BrowserRouter basename={getConfig().ENTERPRISE_COUPONS_PATH}>
             <Header />
             <Switch>
               <Route exact path="/error">
@@ -84,12 +85,12 @@ subscribe(APP_READY, () => {
               </Route>
               <Route
                 exact
-                path="/:catalogID"
+                path="/catalog/:catalogID"
                 render={({ match, location }) => renderValidatedCatalogRoute(match, location, Browsing)}
               />
               <Route
                 exact
-                path="/:catalogID/:courseKey"
+                path="/catalog/:catalogID/:courseKey"
                 render={({ match, location }) => renderValidatedCatalogRoute(match, location, Details)}
               />
               <Redirect to="/error" />
