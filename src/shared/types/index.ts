@@ -54,7 +54,7 @@ export interface CourseDetailResponse {
   prerequisites?: string;
   learning_objectives?: string;
   author?: string;
-  included_materials?: string[];
+  included_materials?: string;
   duration?: string;
   target_audience?: string;
   enrollment_url?: string;
