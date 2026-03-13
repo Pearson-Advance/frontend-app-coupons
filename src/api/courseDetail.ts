@@ -12,6 +12,7 @@ import { CourseDetailResponse } from 'shared/types';
  * @param discoveryBaseUrl - Base URL for the Discovery API, sourced from mfe_config.
  * @param catalogID - Unique identifier of the enterprise catalog.
  * @param courseRunKey - Key identifying the specific course run.
+ * @param couponCode - Coupon code identifier
  * @param signal - Optional AbortSignal used to cancel the request.
  *
  * @returns A promise that resolves to a `CourseDetail` object.
@@ -20,9 +21,10 @@ import { CourseDetailResponse } from 'shared/types';
 const fetchCourseDetail = async (
   catalogID: string,
   courseRunKey: string,
+  couponCode: string,
   signal?: AbortSignal,
 ): Promise<CourseDetailResponse> => {
-  const url = `${getConfig().DISCOVERY_BASE_URL}/enterprise_catalogs/${catalogID}/courses/${encodeURIComponent(courseRunKey)}/`;
+  const url = `${getConfig().DISCOVERY_BASE_URL}/enterprise_catalogs/${catalogID}/courses/${encodeURIComponent(courseRunKey)}/?coupon_code=${couponCode}`;
   const response = await fetch(url, { signal });
 
   if (!response.ok) {
