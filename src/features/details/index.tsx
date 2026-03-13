@@ -19,11 +19,12 @@ const Details = () => {
   const intl = useIntl();
   const history = useHistory();
   const { catalogID, courseKey } = useParams<RouteParams>();
-  const { data, isLoading } = useCourseDetail(catalogID, courseKey);
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
   const couponCode = params.get('coupon_code');
+
+  const { data, isLoading } = useCourseDetail(catalogID, courseKey, couponCode!);
 
   const handleBack = () => history.push(`/catalog/${catalogID}/?coupon_code=${couponCode}`);
 
