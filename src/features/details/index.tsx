@@ -32,7 +32,7 @@ const Details = () => {
   if (!data || Object.keys(data).length === 0) { return <ErrorState onBack={handleBack} />; }
 
   const hasSidebar = data.duration
-    || data.included_materials?.length
+    || data.included_materials
     || data.target_audience
     || data.author;
 
@@ -129,14 +129,17 @@ const Details = () => {
                 </div>
               )}
 
-              {!!data.included_materials?.length && (
+              {!!data.included_materials && (
                 <div className="course-details__sidebar-item">
                   <span className="course-details__sidebar-label">
                     <FontAwesomeIcon icon={faBook} className="mr-2" />
                     {intl.formatMessage(messages.includedMaterialsLabel)}
                   </span>
                   <ul className="course-details__materials-list">
-                    {data.included_materials.map((item: string) => (
+                    {(Array.isArray(data.included_materials)
+                      ? data.included_materials
+                      : (data.included_materials).split('\n').map((s: string) => s.trim()).filter(Boolean)
+                    ).map((item: string) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
