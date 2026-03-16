@@ -10,6 +10,7 @@ module.exports = createConfig('webpack-prod', {
       i18n: path.resolve(__dirname, 'src/i18n'),
       app: path.resolve(__dirname, 'src/app'),
       shared: path.resolve(__dirname, 'src/shared'),
+      assets: path.resolve(__dirname, 'src/assets'),
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
