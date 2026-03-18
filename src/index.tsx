@@ -17,14 +17,14 @@ import {
 } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-import Footer from '@edx/frontend-component-footer';
-import Header from '@edx/frontend-component-header';
-
 import appMessages from 'i18n';
+import Footer from '@edx/frontend-component-footer';
+
 import Browsing from 'features/browsing';
 import Details from 'features/details';
 import CouponError from 'features/error';
+import { Header } from 'react-paragon-topaz';
+import HeaderLogo from 'assets/svg/header-logo.svg';
 import { CatalogProvider } from 'app/providers/CatalogProvider';
 import { validateUuid } from 'shared/helpers';
 
@@ -78,7 +78,7 @@ subscribe(APP_READY, () => {
       <QueryClientProvider client={queryClient}>
         <AppProvider>
           <BrowserRouter basename={getConfig().ENTERPRISE_COUPONS_PATH}>
-            <Header />
+            <Header src={HeaderLogo} />
             <Switch>
               <Route exact path="/error">
                 <CouponError />
