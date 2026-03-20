@@ -114,4 +114,7 @@ subscribe(APP_INIT_ERROR, (error) => {
 initialize({
   messages: [appMessages],
   requireAuthenticatedUser: false,
+  handlers: {
+    auth: async () => {},
+  },
 });
