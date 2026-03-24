@@ -50,6 +50,24 @@ $bp-lg: 992px;
     }
   }
 
+  // ── Header image ───────────────────────────────────────────────────────────
+  &__image {
+    $image-width: 180px;
+    $image-height: 160px;
+
+    max-width: $image-width;
+    max-height: $image-height;
+    min-width: $image-width;
+    min-height: $image-height;
+    margin-right: 2em;
+    border-radius: $border-radius;
+    object-fit: cover;
+
+
+    @media (max-width: map-get($grid-breakpoints, md)) {
+      display: none;
+    }
+  }
   // ── Header meta ───────────────────────────────────────────────────────────
 
   &__vendor {
@@ -58,9 +76,10 @@ $bp-lg: 992px;
   }
 
   &__title {
-    margin-top: 1em;
+    font-size: 28px;
+    margin-top: .5em;
 
-    &-button.btntpz {
+    &-button.btntpz.btn-primary {
       width: 25%;
       background: $color-button-bg;
       color: $black-2;
@@ -103,8 +122,12 @@ $bp-lg: 992px;
   }
 
   &__section {
+    h2 {
+      font-size: 25px;
+    }
+
     background-color: $white;
-    border-radius: 4px;
+    border-radius: $border-radius;
     padding: 20px;
     border: 1px solid $divider-300;
   }
@@ -123,7 +146,7 @@ $bp-lg: 992px;
   // Single card that wraps all sidebar content
   &__sidebar-card {
     background-color: $white;
-    border-radius: 4px;
+    border-radius: $border-radius;
     border: 1px solid $divider-300;
     padding: 20px;
     display: flex;
@@ -145,14 +168,17 @@ $bp-lg: 992px;
   }
 
   &__sidebar-label {
+    text-transform: uppercase;
     font-weight: 600;
-    font-size: .875em;
-    color: $black-2;
+    font-size: 12px;
+    color: $neutral-600;
   }
 
   &__sidebar-value {
-    color: $neutral-700;
+    color: $black-2;
     font-size: .9em;
+    margin-left: 18px;
+
 
     // Strip default margin from parsed HTML paragraphs inside the sidebar
     p {
@@ -162,8 +188,9 @@ $bp-lg: 992px;
 
   &__materials-list {
     margin: 0;
+    margin-left: 10px;
     padding-left: 1.25em;
-    color: $neutral-700;
+    color: $black-2;
     font-size: .9em;
   }
 

@@ -6,8 +6,6 @@ import {
   Pagination,
 } from '@edx/paragon';
 import { useIntl } from 'react-intl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { CatalogItem, ItemType } from 'shared/types';
 import SearchBar from 'features/browsing/components/SearchBar';
@@ -15,7 +13,6 @@ import {
   FILTER_ITEM_TYPES,
   TOPICS,
   VENDORS,
-  PAGE_SIZE_OPTIONS,
   PAGE_SIZE,
 } from 'shared/constants';
 import FilterSection from 'features/browsing/components/FilterSection';
@@ -25,12 +22,11 @@ import { CatalogContext } from 'app/providers/CatalogProvider';
 import CourseCard from 'features/browsing/components/CourseCard';
 import './index.scss';
 
-const RemoveIcon = () => <FontAwesomeIcon icon={faXmark} />;
+const RemoveIcon = () => <i className="fa-light fa-xmark" />;
 
 const Browsing = () => {
   const intl = useIntl();
   const {
-    pageSize,
     topics,
     vendors,
     page,
@@ -40,7 +36,6 @@ const Browsing = () => {
     setTopics,
     setVendors,
     setPage,
-    setPageSize,
     clearAll,
   } = useContext(CatalogContext);
 
@@ -57,10 +52,12 @@ const Browsing = () => {
     return type === FILTER_ITEM_TYPES.TOPICS ? setTopics(updater) : setVendors(updater);
   };
 
-  const pageCount = Math.ceil((data?.count ?? 0) / PAGE_SIZE);
-  const hasNavigation = (data?.next !== null || data?.previous !== null) && data?.count && data?.count > 0;
-  const start = (page - 1) * pageSize + 1;
-  const end = Math.min(page * pageSize, data?.count ?? 0);
+  const actualPageSize = data?.results?.length ?? PAGE_SIZE;
+  const effectivePageSize = actualPageSize > 0 ? actualPageSize : PAGE_SIZE;
+  const pageCount = data?.count ? Math.ceil(data.count / effectivePageSize) : 0;
+  const hasNavigation = pageCount > 1;
+  const start = (page - 1) * effectivePageSize + 1;
+  const end = Math.min(page * effectivePageSize, data?.count ?? 0);
 
   const renderFilters = () => (
     <>
@@ -192,19 +189,6 @@ const Browsing = () => {
 
           {!isLoading && !isError && hasNavigation && (
             <div className="pagination-container">
-              <div className="gap-2 d-flex align-items-center">
-                <span className="text-muted small">Rows per page:</span>
-                <select
-                  value={pageSize}
-                  name="row form"
-                  onChange={(e) => setPageSize(Number(e.target.value))}
-                  className="w-auto form-select"
-                >
-                  {PAGE_SIZE_OPTIONS.map((size) => (
-                    <option key={size} value={size}>{size}</option>
-                  ))}
-                </select>
-              </div>
               <Pagination
                 className="mb-0"
                 paginationLabel="pagination navigation"

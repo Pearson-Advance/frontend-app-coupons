@@ -63,6 +63,7 @@ const CourseCard = ({
           to={`/catalog/${catalogID}/${courseKey}?coupon_code=${couponCode}`}
           className="course-card__title"
           disabled={!courseKey || isLoading}
+          title={title}
         >
           {isLoading ? <Skeleton width={350} /> : title}
         </Link>

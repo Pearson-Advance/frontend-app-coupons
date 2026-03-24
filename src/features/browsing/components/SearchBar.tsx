@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Spinner } from '@edx/paragon';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { CatalogContext } from 'app/providers/CatalogProvider';
 import messages from './messages';
@@ -21,7 +19,7 @@ const InputButtons = ({ disabled, clearInput }: InputButtonsProps) => (
         className="search-clear-button"
         onClick={clearInput}
       >
-        <FontAwesomeIcon icon={faXmark} />
+        <i className="fa-regular fa-xmark" />
       </button>
     )
 }
@@ -32,7 +30,7 @@ const InputButtons = ({ disabled, clearInput }: InputButtonsProps) => (
       disabled={disabled}
       aria-disabled={disabled}
     >
-      <FontAwesomeIcon icon={faArrowRight} />
+      <i className="fa-regular fa-arrow-right" />
     </button>
   </div>
 );
@@ -76,7 +74,7 @@ const SearchBar = () => {
               value={search}
               onChange={handleInputChange}
               disabled={isLoading}
-              leadingElement={<FontAwesomeIcon icon={faSearch} />}
+              leadingElement={<i className="fa-regular fa-magnifying-glass" />}
               trailingElement={
                 isLoading ? (
                   <Spinner
@@ -89,7 +87,7 @@ const SearchBar = () => {
                   <InputButtons disabled={isDisabled} clearInput={handleInputClear} />
                 )
               }
-              floatingLabel={formatMessage(messages.placeholder)}
+              placeholder={formatMessage(messages.placeholder)}
             />
           </Form.Group>
         </Form>
