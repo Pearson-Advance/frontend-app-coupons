@@ -1,9 +1,5 @@
 import { Breadcrumb } from '@edx/paragon';
 import { Button } from 'react-paragon-topaz';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faClock, faBook, faCertificate, faUser,
-} from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 
@@ -58,23 +54,29 @@ const Details = () => {
             ]}
           />
 
-          {data.vendor && (
-            <p className="course-details__vendor">{data.vendor}</p>
-          )}
-          {data.title && (
-            <h1 className="course-details__title">{data.title}</h1>
-          )}
-          {data.enrollment_url && (
-            <Button
-              as="a"
-              href={data.enrollment_url}
-              className="course-details__title-button"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {intl.formatMessage(messages.enrollButton)}
-            </Button>
-          )}
+          <div className="d-flex flex-column flex-md-row w-100">
+            {data.card_image_url && (<img src={data?.card_image_url} className="course-details__image" alt="Course detail" />)}
+
+            <div className="w-100">
+              {data.vendor && (
+                <p className="course-details__vendor">{data.vendor}</p>
+              )}
+              {data.title && (
+              <h1 className="course-details__title">{data.title}</h1>
+              )}
+              {data.enrollment_url && (
+              <Button
+                as="a"
+                href={data.enrollment_url}
+                className="course-details__title-button"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {intl.formatMessage(messages.enrollButton)}
+              </Button>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
@@ -120,7 +122,7 @@ const Details = () => {
               {data.duration && (
                 <div className="course-details__sidebar-item">
                   <span className="course-details__sidebar-label">
-                    <FontAwesomeIcon icon={faClock} className="mr-2" />
+                    <i className="fa-regular fa-clock mr-2" />
                     {intl.formatMessage(messages.durationLabel)}
                   </span>
                   <div className="course-details__sidebar-value">
@@ -132,7 +134,7 @@ const Details = () => {
               {!!data.included_materials && (
                 <div className="course-details__sidebar-item">
                   <span className="course-details__sidebar-label">
-                    <FontAwesomeIcon icon={faBook} className="mr-2" />
+                    <i className="fa-regular fa-book mr-2" />
                     {intl.formatMessage(messages.includedMaterialsLabel)}
                   </span>
                   <ul className="course-details__materials-list">
@@ -149,7 +151,7 @@ const Details = () => {
               {data.target_audience && (
                 <div className="course-details__sidebar-item">
                   <span className="course-details__sidebar-label">
-                    <FontAwesomeIcon icon={faCertificate} className="mr-2" />
+                    <i className="fa-regular fa-certificate mr-2" />
                     {intl.formatMessage(messages.targetAudienceLabel)}
                   </span>
                   <div className="course-details__sidebar-value">
@@ -161,7 +163,7 @@ const Details = () => {
               {data.author && (
                 <div className="course-details__sidebar-item">
                   <span className="course-details__sidebar-label">
-                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    <i className="fa-regular fa-user mr-2" />
                     {intl.formatMessage(messages.authorLabel)}
                   </span>
                   <div className="course-details__sidebar-value">

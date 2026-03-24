@@ -11,7 +11,6 @@ export type Topic = CatalogItem;
 export type Vendor = CatalogItem;
 
 export interface CatalogContextType {
-  pageSize: number;
   search: string;
   vendors: CatalogItem[];
   topics: CatalogItem[];
@@ -24,7 +23,6 @@ export interface CatalogContextType {
   setTopics: (items: CatalogItem[] | ((prev: CatalogItem[]) => CatalogItem[])) => void;
   setVendors: (items: CatalogItem[] | ((prev: CatalogItem[]) => CatalogItem[])) => void;
   setPage: (page: number) => void;
-  setPageSize: (pageSize: number) => void;
   clearAll: () => void;
 }
 
@@ -51,6 +49,7 @@ export interface CourseDetailResponse {
   vendor?: string;
   overview?: string;
   outline?: string;
+  card_image_url?: string;
   prerequisites?: string;
   learning_objectives?: string;
   author?: string;

@@ -10,7 +10,6 @@ import React, {
 import { useParams, useLocation } from 'react-router-dom';
 
 import useCourses from 'hooks';
-import { PAGE_SIZE } from 'shared/constants';
 import { CatalogContextType, CatalogItem, RouteParams } from 'shared/types';
 
 interface CommittedFilters {
@@ -25,7 +24,6 @@ export const CatalogContext = createContext<CatalogContextType>({
   vendors: [],
   topics: [],
   page: 1,
-  pageSize: PAGE_SIZE,
   data: undefined,
   isLoading: false,
   isError: false,
@@ -35,7 +33,6 @@ export const CatalogContext = createContext<CatalogContextType>({
   setVendors: () => {},
   setPage: () => {},
   clearAll: () => {},
-  setPageSize: () => {},
 });
 
 export const CatalogProvider = ({ children }: { children: ReactNode }) => {
@@ -46,7 +43,6 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
   const couponCodeFromUrl = params.get('coupon_code') ?? '';
 
   const [search, setSearch] = useState('');
-  const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [filters, setFilters] = useState<{ topics: CatalogItem[]; vendors: CatalogItem[] }>({
     topics: [],
     vendors: [],
@@ -145,12 +141,10 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
     committed.topics,
     committed.vendors,
     committed.page,
-    pageSize,
   );
 
   const value = useMemo(
     () => ({
-      pageSize,
       topics: filters.topics,
       vendors: filters.vendors,
       search,
@@ -158,7 +152,6 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
       data,
       isLoading,
       isError,
-      setPageSize,
       setTopics,
       setVendors,
       setSearch,
@@ -168,13 +161,11 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
     }),
     [
       filters,
-      pageSize,
       search,
       committed.page,
       data,
       isLoading,
       isError,
-      setPageSize,
       setTopics,
       setVendors,
       setPage,

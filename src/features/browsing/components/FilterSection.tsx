@@ -2,8 +2,6 @@ import React, { useMemo, useState } from 'react';
 import Select from 'react-select';
 import { useIntl } from 'react-intl';
 import { Form, Button, Collapsible } from '@edx/paragon';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { CatalogItem } from 'shared/types';
 import messages from 'features/browsing/components/messages';
@@ -64,10 +62,7 @@ const FilterSection: React.FC<Props> = ({
                 className="mb-2 checkbox-option ml-3"
               >
                 {checked && (
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="checkbox-icon mr-2"
-                  />
+                  <i className="fa-regular fa-check checkbox-icon mr-2" />
                 )}
                 {item.name}
               </Form.Checkbox>
@@ -81,10 +76,7 @@ const FilterSection: React.FC<Props> = ({
               className="p-0 mt-2 text-decoration-none button-display-toggle"
               onClick={() => setShowAll((v) => !v)}
             >
-              <FontAwesomeIcon
-                icon={showAll ? faMinus : faPlus}
-                className="mr-2"
-              />
+              {showAll ? <i className="fa-regular fa-minus mr-2" /> : <i className="fa-regular fa-plus mr-2" />}
               {intl.formatMessage(
                 showAll ? messages.showLess : messages.showMore,
               )}

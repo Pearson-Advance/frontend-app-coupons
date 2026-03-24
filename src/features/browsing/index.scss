@@ -87,6 +87,7 @@
   border-radius: 50%;
   font-size: 9px;
   margin-right: 10px;
+  width: 22px;
 }
 
 .search-disabled {
@@ -371,10 +372,24 @@ ul.pagination {
   .main-layout::before {
     background-position: top center;
   }
+
+  .section-content {
+    max-width: 1900px;
+    margin: 0 auto;
+    padding: 0 5em;
+  }
 }
 
 @media (width >= 1970px) {
   .main-layout::before {
     background-position: bottom center;
+  }
+
+  .section-content {
+    padding: 0;
+  }
+
+  .div-filters {
+    margin-right: 5em;
   }
 }
