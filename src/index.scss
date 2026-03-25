@@ -4,9 +4,38 @@
 @import "@edx/paragon/scss/core/core.scss";
 @import "@edx/brand/paragon/overrides.scss";
 @import "~@edx/frontend-component-footer/dist/footer";
-@import "react-paragon-topaz/src/styles/Pagination/Pagination.scss";
 @import 'assets/variables';
+@import "react-paragon-topaz/src/styles/Pagination/Pagination.scss";
 
 header.header {
   background-color: $primary-900;
+}
+
+footer.footer {
+  flex-direction: column;
+  justify-content: center;
+  list-style: none;
+
+  .container-fluid {
+    display: flex;
+    justify-content: center;
+
+    ul {
+      list-style: none;
+      display: flex;
+
+      li {
+        margin-left: 10px;
+        
+        a {
+          color: $background-color-purple !important;
+        }
+      }
+    }
+  }
+
+  .copyright {
+    display: flex;
+    justify-content: center;
+  }
 }

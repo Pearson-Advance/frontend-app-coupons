@@ -59,9 +59,10 @@ $bp-lg: 992px;
     max-height: $image-height;
     min-width: $image-width;
     min-height: $image-height;
-    margin-right: 2em;
+    margin-right: 1.8em;
     border-radius: $border-radius;
     object-fit: cover;
+    margin-top: 6px;
 
 
     @media (max-width: map-get($grid-breakpoints, md)) {
@@ -71,16 +72,17 @@ $bp-lg: 992px;
   // ── Header meta ───────────────────────────────────────────────────────────
 
   &__vendor {
-    color: $neutral-700;
-    margin-top: .5em;
+    color: $neutral-600;
+    text-transform: uppercase;
+    margin-bottom: 0;
   }
 
   &__title {
     font-size: 28px;
-    margin-top: .5em;
+    margin-top: 4px;
 
     &-button.btntpz.btn-primary {
-      width: 25%;
+      width: 100%;
       background: $color-button-bg;
       color: $black-2;
       border-color: transparent;
@@ -89,6 +91,16 @@ $bp-lg: 992px;
       &:hover {
         background: $color-button-bg-hover;
         border-color: transparent;
+        color: $color-white;
+      }
+
+      &:active {
+        background-color: $color-button-bg-hover !important;
+        border: none;
+      }
+
+      @media (min-width: map-get($grid-breakpoints, md)) {
+        width: 25%;
       }
     }
   }
@@ -116,7 +128,6 @@ $bp-lg: 992px;
     width: 100%;
 
     @media (min-width: $bp-lg) {
-      flex: 0 0 66.666%;
       max-width: 66.666%;
     }
   }
@@ -276,6 +287,10 @@ $bp-lg: 992px;
   .course-details {
     &::before {
       background-position: 0 -110px;
+    }
+
+    &__body {
+      padding: 2em 5em;
     }
   }
 }

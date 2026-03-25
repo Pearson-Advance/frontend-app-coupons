@@ -54,7 +54,7 @@ const Details = () => {
             ]}
           />
 
-          <div className="d-flex flex-column flex-md-row w-100">
+          <div className="d-flex flex-column flex-md-row w-100 mt-md-2">
             {data.card_image_url && (<img src={data?.card_image_url} className="course-details__image" alt="Course detail" />)}
 
             <div className="w-100">
