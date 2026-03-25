@@ -21,8 +21,10 @@ export const VENDORS: ReadonlyArray<Vendor> = [
   { id: 'google', name: 'Google' },
   { id: 'isc2', name: 'ISC2' },
   { id: 'it-specialist', name: 'IT Specialist' },
+  { id: 'linux', name: 'Linux' },
   { id: 'microsoft', name: 'Microsoft' },
   { id: 'n-a', name: 'N/A' },
+  { id: 'pearson', name: 'Pearson' },
   { id: 'pmi', name: 'PMI' },
   { id: 'vmware', name: 'VMware' },
 ];
