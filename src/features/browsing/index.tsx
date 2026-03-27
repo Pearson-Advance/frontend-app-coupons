@@ -52,12 +52,11 @@ const Browsing = () => {
     return type === FILTER_ITEM_TYPES.TOPICS ? setTopics(updater) : setVendors(updater);
   };
 
-  const actualPageSize = data?.results?.length ?? PAGE_SIZE;
-  const effectivePageSize = actualPageSize > 0 ? actualPageSize : PAGE_SIZE;
-  const pageCount = data?.count ? Math.ceil(data.count / effectivePageSize) : 0;
+  const totalCount = data?.count ?? 0;
+  const pageCount = totalCount > 0 ? Math.ceil(totalCount / PAGE_SIZE) : 0;
   const hasNavigation = pageCount > 1;
-  const start = (page - 1) * effectivePageSize + 1;
-  const end = Math.min(page * effectivePageSize, data?.count ?? 0);
+  const start = totalCount > 0 ? (page - 1) * PAGE_SIZE + 1 : 0;
+  const end = Math.min(page * PAGE_SIZE, totalCount);
 
   const renderFilters = () => (
     <>
@@ -180,7 +179,7 @@ const Browsing = () => {
             <CourseCard
               key={course.key}
               title={course.title}
-              vendor={course.topics[0]}
+              vendor={course.vendor}
               imageUrl={course.card_image_url}
               enrolmentUrl={course.enrollment_url ?? '#'}
               courseKey={course.key}
@@ -197,6 +196,7 @@ const Browsing = () => {
                 variant="reduced"
                 size="small"
                 onPageSelect={(selectedPage: number) => {
+                  if (!data?.next && selectedPage > page) { return; }
                   setPage(selectedPage);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
