@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Breadcrumb } from '@edx/paragon';
 import { Button } from 'react-paragon-topaz';
 import { useIntl } from 'react-intl';
@@ -23,6 +24,10 @@ const Details = () => {
   const { data, isLoading } = useCourseDetail(catalogID, courseKey, couponCode!);
 
   const handleBack = () => history.push(`/catalog/${catalogID}/?coupon_code=${couponCode}`);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   if (isLoading) { return <PageSkeleton />; }
   if (!data || Object.keys(data).length === 0) { return <ErrorState onBack={handleBack} />; }
