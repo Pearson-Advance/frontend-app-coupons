@@ -23,7 +23,7 @@ import Footer from '@edx/frontend-component-footer';
 import Browsing from 'features/browsing';
 import Details from 'features/details';
 import CouponError from 'features/error';
-import { Header } from 'react-paragon-topaz';
+import { Header, Banner } from 'react-paragon-topaz';
 import HeaderLogo from 'assets/svg/header-logo.svg';
 import { CatalogProvider } from 'app/providers/CatalogProvider';
 import { validateUuid } from 'shared/helpers';
@@ -73,12 +73,17 @@ function renderValidatedCatalogRoute(match, location, Component) {
 }
 
 subscribe(APP_READY, () => {
+  const bannerText = getConfig().MAINTENANCE_BANNER_TEXT || '';
+
   ReactDOM.render(
     <IntlProvider locale="en">
       <QueryClientProvider client={queryClient}>
         <AppProvider>
           <BrowserRouter basename={getConfig().ENTERPRISE_COUPONS_PATH}>
             <Header src={HeaderLogo} />
+            {bannerText && (
+            <Banner variant="warning" iconWarning text={bannerText} />
+            )}
             <Switch>
               <Route exact path="/error">
                 <CouponError />
