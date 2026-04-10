@@ -1,4 +1,4 @@
-import { Skeleton } from '@edx/paragon';
+import { Skeleton } from '@openedx/paragon';
 
 const CourseHeaderSkeleton = () => (
   <header className="course-details__header">

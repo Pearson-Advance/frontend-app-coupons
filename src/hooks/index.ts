@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 import fetchCourses from 'api/catalog';
 import { CatalogItem } from 'shared/types';
@@ -17,10 +17,9 @@ const useCourses = (
 ) => {
   const isValidCatalogID = validateUuid(catalogID);
   const mergedTopics = useMemo(() => [...topics, ...vendors], [topics, vendors]);
-  const topicsKey = mergedTopics.map(t => t.id).join(',');
+  const topicsKey = useMemo(() => mergedTopics.map(t => t.id).join(','), [mergedTopics]);
 
   const coursesQuery = useQuery({
-    retry: false,
     queryKey: ['courses', catalogID, couponCode, search, topicsKey, page, pageSize],
     queryFn: ({ signal }) => fetchCourses(
       catalogID,
@@ -32,14 +31,14 @@ const useCourses = (
       pageSize,
     ),
     enabled: isValidCatalogID,
-    keepPreviousData: true,
+    retry: false,
+    placeholderData: keepPreviousData,
     staleTime: 60_000,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
-    refetchInterval: false,
   });
 
-  const pageCount = coursesQuery.data ? Math.ceil(coursesQuery.data.count / PAGE_SIZE) : 0;
+  const pageCount = coursesQuery.data ? Math.ceil(coursesQuery.data.count / pageSize) : 0;
 
   return {
     ...coursesQuery,

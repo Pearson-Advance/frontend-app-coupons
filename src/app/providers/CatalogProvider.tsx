@@ -36,7 +36,7 @@ export const CatalogContext = createContext<CatalogContextType>({
 });
 
 export const CatalogProvider = ({ children }: { children: ReactNode }) => {
-  const { catalogID } = useParams<RouteParams>();
+  const { catalogID } = useParams<RouteParams>() as RouteParams;
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
@@ -47,12 +47,14 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
     topics: [],
     vendors: [],
   });
+
   const [committed, setCommitted] = useState<CommittedFilters>({
     search: '',
     topics: [],
     vendors: [],
     page: 1,
   });
+
   const searchRef = useRef(search);
   const filtersRef = useRef(filters);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -102,14 +104,13 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
   const commitSearch = useCallback((value?: string) => {
     if (debounceRef.current) { clearTimeout(debounceRef.current); }
 
-    const newSearch = value !== undefined ? value : searchRef.current.trim();
+    const newSearch = (value ?? searchRef.current).trim();
 
-    setCommitted({
+    setCommitted(prev => ({
+      ...prev,
       search: newSearch,
-      topics: filtersRef.current.topics,
-      vendors: filtersRef.current.vendors,
       page: 1,
-    });
+    }));
   }, []);
 
   const setTopics = useCallback((updater: CatalogItem[] | ((prev: CatalogItem[]) => CatalogItem[])) => {
@@ -128,6 +129,12 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
 
   const handleClearAll = useCallback(() => {
     setFilters({ topics: [], vendors: [] });
+    setCommitted(prev => ({
+      ...prev,
+      topics: [],
+      vendors: [],
+      page: 1,
+    }));
   }, []);
 
   const setPage = useCallback((page: number) => {

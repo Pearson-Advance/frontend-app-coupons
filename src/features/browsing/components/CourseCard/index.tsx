@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Button } from 'react-paragon-topaz';
-import { Skeleton } from '@edx/paragon';
+import { Skeleton } from '@openedx/paragon';
 import { Link, useParams, useLocation } from 'react-router-dom';
 
 import messages from './messages';
@@ -28,11 +28,17 @@ const CourseCard = ({
 }: CourseCardProps) => {
   const intl = useIntl();
   const [imageError, setImageError] = useState(false);
-  const { catalogID } = useParams<{catalogID: string}>();
+  const { catalogID } = useParams<{ catalogID: string }>();
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
   const couponCode = params.get('coupon_code');
+
+  const isDisabled = !courseKey || isLoading;
+
+  const to = !isDisabled
+    ? `/catalog/${catalogID}/${courseKey}?coupon_code=${couponCode}`
+    : '#';
 
   return (
     <div className="mb-3 course-card">
@@ -60,9 +66,11 @@ const CourseCard = ({
         )}
 
         <Link
-          to={`/catalog/${catalogID}/${courseKey}?coupon_code=${couponCode}`}
-          className="course-card__title"
-          disabled={!courseKey || isLoading}
+          to={to}
+          className={`course-card__title ${isDisabled ? 'disabled' : ''}`}
+          onClick={(e) => {
+            if (isDisabled) { e.preventDefault(); }
+          }}
           title={title}
         >
           {isLoading ? <Skeleton width={350} /> : title}

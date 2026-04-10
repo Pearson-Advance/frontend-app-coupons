@@ -1,6 +1,7 @@
 {
   "extends": "@edx/typescript-config",
   "compilerOptions": {
+    "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
       "*": ["*"],

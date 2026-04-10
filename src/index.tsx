@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 import {
   APP_INIT_ERROR,
@@ -8,12 +8,14 @@ import {
   getConfig,
 } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+
 import {
-  BrowserRouter,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
+  useParams,
+  useLocation,
 } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -53,16 +55,19 @@ const queryClient = new QueryClient();
  * - No invalid API calls are triggered.
  * - The application fails fast and predictably.
  */
-function renderValidatedCatalogRoute(match, location, Component) {
-  const params = new URLSearchParams(location.search);
-  const hasCouponParam = params.has('coupon_code');
-  const couponCode = params.get('coupon_code');
+const ValidatedCatalogRoute = ({ Component }) => {
+  const params = useParams();
+  const location = useLocation();
 
-  const isValidCatalog = validateUuid(match.params.catalogID);
-  const isValidCoupon = hasCouponParam && (couponCode !== null && couponCode.length > 0 && /^[A-Z0-9_-]+$/.test(couponCode));
+  const searchParams = new URLSearchParams(location.search);
+  const hasCouponParam = searchParams.has('coupon_code');
+  const couponCode = searchParams.get('coupon_code');
+
+  const isValidCatalog = validateUuid(params.catalogID);
+  const isValidCoupon = hasCouponParam && !!couponCode && couponCode.length > 0 && /^[A-Z0-9_-]+$/.test(couponCode);
 
   if (!isValidCatalog || !isValidCoupon) {
-    return <Redirect to="/error" />;
+    return <Navigate to="/error" replace />;
   }
 
   return (
@@ -70,50 +75,50 @@ function renderValidatedCatalogRoute(match, location, Component) {
       <Component />
     </CatalogProvider>
   );
-}
+};
 
-subscribe(APP_READY, () => {
+ValidatedCatalogRoute.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+};
+
+const App = () => {
   const bannerText = getConfig().MAINTENANCE_BANNER_TEXT || '';
 
-  ReactDOM.render(
+  return (
     <IntlProvider locale="en">
       <QueryClientProvider client={queryClient}>
         <AppProvider>
-          <BrowserRouter basename={getConfig().ENTERPRISE_COUPONS_PATH}>
-            <Header src={HeaderLogo} />
-            {bannerText && (
+          <Header src={HeaderLogo} />
+          {bannerText && (
             <Banner variant="warning" iconWarning text={bannerText} />
-            )}
-            <Switch>
-              <Route exact path="/error">
-                <CouponError />
-              </Route>
-              <Route
-                exact
-                path="/catalog/:catalogID"
-                render={({ match, location }) => renderValidatedCatalogRoute(match, location, Browsing)}
-              />
-              <Route
-                exact
-                path="/catalog/:catalogID/:courseKey"
-                render={({ match, location }) => renderValidatedCatalogRoute(match, location, Details)}
-              />
-              <Redirect to="/error" />
-            </Switch>
-            <Footer />
-          </BrowserRouter>
+          )}
+          <Routes>
+            <Route path="/error" element={<CouponError />} />
+            <Route
+              path="/catalog/:catalogID"
+              element={<ValidatedCatalogRoute Component={Browsing} />}
+            />
+            <Route
+              path="/catalog/:catalogID/:courseKey"
+              element={<ValidatedCatalogRoute Component={Details} />}
+            />
+            <Route path="*" element={<Navigate to="/error" replace />} />
+          </Routes>
+          <Footer />
         </AppProvider>
       </QueryClientProvider>
-    </IntlProvider>,
-    document.getElementById('root'),
+    </IntlProvider>
   );
+};
+
+const root = createRoot(document.getElementById('root'));
+
+subscribe(APP_READY, () => {
+  root.render(<App />);
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
-  ReactDOM.render(
-    <ErrorPage message={error.message} />,
-    document.getElementById('root'),
-  );
+  root.render(<ErrorPage message={error.message} />);
 });
 
 initialize({

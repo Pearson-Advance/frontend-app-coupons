@@ -1,5 +1,5 @@
 import { Button } from 'react-paragon-topaz';
-import { Breadcrumb } from '@edx/paragon';
+import { Breadcrumb } from '@openedx/paragon';
 import { useIntl } from 'react-intl';
 
 import messages from 'features/details/messages';

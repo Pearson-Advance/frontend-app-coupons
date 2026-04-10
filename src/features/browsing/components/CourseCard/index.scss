@@ -1,5 +1,4 @@
-@import '~@edx/paragon/scss/core/core';
-@import 'assets/variables';
+$border-radius: 8px;
 
 .course-card {
   $image-size-height: 100px;
@@ -7,17 +6,17 @@
 
   height: 150px;
   border-radius: $border-radius;
-  background: $color-white;
+  background: var(--pgn-color-white);
   overflow: hidden;
   display: flex;
   align-items: center;
   padding: 1em;
-  border: 1px solid $neutral-100;
+  border: 1px solid var(--pgn-color-gray-vue-200);
 
   &__image {
     width: $image-size-width;
     height: $image-size-height;
-    background: $neutral-200;
+    background: var(--pgn-color-gray-vue-250);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,7 +43,7 @@
     border-radius: $border-radius;
     width: $image-size-width;
     height: $image-size-height;
-    background: $neutral-300;
+    background: var(--pgn-color-gray-vue-275);
     background-image: url('../../../../assets/svg/course-card-fallback.svg');
     background-size: cover;
     background-clip: content-box;
@@ -61,7 +60,7 @@
 
   &__vendor {
     font-size: 12px;
-    color: $black-3;
+    color: var(--pgn-color-gray-vue-700);
     text-transform: uppercase;
     font-weight: 700;
   }
@@ -70,7 +69,7 @@
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 0;
-    color: $background-color-purple;
+    color: var(--pgn-color-primary-base);
     /* stylelint-disable-next-line value-no-vendor-prefix */
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -84,39 +83,39 @@
   }
 
   &__title:hover {
-    color: $background-color-purple;
+    color: var(--pgn-color-primary-base);
   }
 
   &__meta {
     font-size: 14px;
     font-weight: 200;
-    color: $neutral-700;
+    color: var(--pgn-color-gray-vue-700);
   }
 
   &__button.btntpz.btn-primary {
     width: 100%;
-    background: $color-button-bg;
-    color: $black-2;
+    background: var(--pgn-color-yellow-vue-300);
+    color: var(--pgn-color-black);
     border-color: transparent;
 
     &:hover {
-      background: $color-button-bg-hover;
+      background: var(--pgn-color-yellow-vue-500);
       border-color: transparent;
-      color: $color-white;
+      color: var(--pgn-color-white);
     }
 
     &:active {
-      background-color: $color-button-bg-hover !important;
+      background-color: var(--pgn-color-yellow-vue-500) !important;
       border: none;
     }
 
-    @media (min-width: map-get($grid-breakpoints, xl)) {
+    @media screen and (width >= 1200px) {
       width: 25%;
     }
   }
 }
 
-@media (width <= map-get($grid-breakpoints, md)) {
+@media screen and (width <= 768px) {
   .course-card {
     flex-direction: column;
     height: auto;
@@ -160,7 +159,7 @@
   }
 }
 
-@media (map-get($grid-breakpoints, md) < width <= map-get($grid-breakpoints, xl)) {
+@media screen and (768px <= width <= 1199px) {
   .course-card {
     flex-direction: column;
     height: auto;
