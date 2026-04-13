@@ -1,6 +1,6 @@
 
-@import '~@edx/paragon/scss/core/core';
-@import 'assets/variables';
+$header-height: 76px;
+$footer-height: 142px;
 
 .catalog-error-page {
   min-height: calc(100vh - $header-height - $footer-height);
@@ -22,5 +22,5 @@
   max-width: 520px;
   font-size: 1em;
   line-height: 1.6;
-  color: $black-3;
+  color: var(--pgn-color-gray-vue-700);
 }

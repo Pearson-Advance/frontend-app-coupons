@@ -8,11 +8,11 @@ const useCourseDetail = (
   couponCode: string,
 ) => {
   const courseDetailQuery = useQuery({
-    queryKey: ['course-detail', catalogID, courseRunKey],
+    queryKey: ['course-detail', catalogID, courseRunKey, couponCode],
     queryFn: ({ signal }) => fetchCourseDetail(
-      catalogID as string,
-      courseRunKey as string,
-      couponCode as string,
+      catalogID,
+      courseRunKey,
+      couponCode,
       signal,
     ),
     enabled: Boolean(catalogID && courseRunKey),
@@ -21,10 +21,7 @@ const useCourseDetail = (
     refetchOnWindowFocus: false,
   });
 
-  return {
-    ...courseDetailQuery,
-    isLoading: courseDetailQuery.isLoading,
-  };
+  return courseDetailQuery;
 };
 
 export default useCourseDetail;

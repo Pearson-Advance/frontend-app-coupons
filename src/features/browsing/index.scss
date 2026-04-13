@@ -1,7 +1,6 @@
-@import '~@edx/paragon/scss/core/core';
-@import 'assets/variables';
-
 /* Layout */
+$header-height: 76px;
+$footer-height: 142px;
 
 .main-layout {
   position: relative;
@@ -9,7 +8,7 @@
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - $header-height - $footer-height);
-  background-color: $background-color;
+  background-color: var(--pgn-color-gray-vue-010);
 }
 
 .main-layout::before {
@@ -49,7 +48,7 @@
   min-height: clamp(220px, 28vw, 380px);
 
   & h2, p {
-    color: $white;
+    color: var(--pgn-color-white);
   }
 
   & h2 {
@@ -75,15 +74,15 @@
 
 .search-submit-button {
   background-color: transparent;
-  color: $background-color-purple;
+  color: var(--pgn-color-primary-base);
   border: none;
-  border-left: 1px solid $neutral-500;
+  border-left: 1px solid var(--pgn-color-gray-vue-350);
 }
 
 .search-clear-button {
   border: none;
-  background-color: $neutral-700;
-  color: $white;
+  background-color: var(--pgn-color-gray-vue-700);
+  color: var(--pgn-color-white);
   border-radius: 50%;
   font-size: 9px;
   margin-right: 10px;
@@ -107,7 +106,7 @@
 
   .divider {
     border: 0;
-    border-top: 1px solid $color-divider;
+    border-top: 1px solid var(--pgn-color-gray-vue-300);
     margin: 1.5em 0;
   }
 
@@ -117,8 +116,8 @@
     gap: .5em;
 
     .pgn-chip {
-      background-color: $color-chip-bg;
-      color: $color-chip-text;
+      background-color: var(--pgn-color-primary-100);
+      color: var(--pgn-color-primary-base);
       font-weight: 500;
     }
   }
@@ -133,14 +132,14 @@
 
 .filter-collapsible {
   font-weight: 300;
-  color: $black-2;
+  color: var(--pgn-color-black);
 
   .collapsible-trigger {
     display: flex;
     justify-content: space-between;
     font-weight: 700;
     text-decoration: none !important;
-    color: $neutral-800 !important;
+    color: var(--pgn-color-gray-vue-800) !important;
 
     .collapsible-icon {
       font-size: 10px !important;
@@ -149,16 +148,16 @@
 }
 
 .h4-filter-by {
-  color: $neutral-800 !important;
+  color: var(--pgn-color-gray-vue-800) !important;
 }
 
 .button-clear-filters {
-  color: $neutral-500 !important;
+  color: var(--pgn-color-gray-vue-350) !important;
 }
 
 .button-display-toggle {
   width: fit-content;
-  color: $background-color-purple !important;
+  color: var(--pgn-color-primary-base) !important;
 }
 
 /* Checkbox */
@@ -171,7 +170,7 @@
   position: absolute;
   left: 5px;
   font-size: 12px;
-  color: $color-white;
+  color: var(--pgn-color-white);
 }
 
 .pgn__form {
@@ -180,33 +179,37 @@
   }
 }
 
+.pgn__form-group .form-control {
+  height: var(--pgn-size-form-input-height-base) !important;
+}
+
 .pgn__form-checkbox-input {
   margin-right: 10px;
   border-width: 1.5px;
   min-width: 20px;
   min-height: 20px;
   border-radius: 4px !important;
-  border-color: $black-3;
+  border-color: var(--pgn-color-gray-vue-700);
 
   &:focus {
     border-radius: 100px;
-    border-color: $black-2 !important;
+    border-color: var(--pgn-color-black) !important;
   }
   
   &:focus::before {
     filter: blur(1px);
-    border-color: $background-color-purple !important;
+    border-color: var(--pgn-color-primary-base) !important;
     border-radius: 50% !important;
-    width: 200%;
-    height: 200%;
-    top: -8px !important;
-    left: -8px !important;
+    width: 170%;
+    height: 170%;
+    top: -7px !important;
+    left: -7px !important;
   }
 
   &:checked {
     background-image: none !important;
-    background-color: $background-color-purple !important;
-    border-color: $background-color-purple !important;
+    background-color: var(--pgn-color-primary-base) !important;
+    border-color: var(--pgn-color-primary-base) !important;
   }
 }
 
@@ -215,11 +218,11 @@
 .pgn__chip {
   padding: 0 10px;
   border-radius: 20px !important;
-  background-color: $complementary-100 !important;
+  background-color: var(--pgn-color-green-vue-050) !important;
 
   &__label {
     font-weight: 600;
-    color: $background-color-purple !important;
+    color: var(--pgn-color-primary-base) !important;
   }
 
   &__icon-after {
@@ -230,11 +233,11 @@
     .pgn__icon {
       font-size: 15px;
       width: 10px !important;
-      color: $black-3 !important;
+      color: var(--pgn-color-gray-vue-700) !important;
     }
 
     &:hover {
-      background-color: $color-transparent !important;
+      background-color: transparent !important;
     }
   }
 }
@@ -247,8 +250,8 @@
   align-items: center;
   margin: 1em 0;
   padding: 1em;
-  background-color: $color-white;
-  border-top: 1px solid $color-divider;
+  background-color: var(--pgn-color-white);
+  border-top: 1px solid var(--pgn-color-gray-vue-300);
 }
 
 .form-select {
@@ -266,26 +269,26 @@ ul.pagination {
   margin-bottom: 1.5em;
 
   .collapsible-card {
-    border: 1px solid $color-divider;
+    border: 1px solid var(--pgn-color-gray-vue-300);
     border-radius: 8px;
-    background-color: $color-white;
+    background-color: var(--pgn-color-white);
     overflow: hidden;
   }
 
   .collapsible-trigger {
     padding: 1em;
     font-weight: 600;
-    background-color: $color-white;
+    background-color: var(--pgn-color-white);
 
     &:hover {
-      background-color: $color-hover-bg;
+      background-color: var(--pgn-color-gray-vue-100);
     }
   }
 }
 
 .filter-mobile-icon {
   span {
-    color: $neutral-700;
+    color: var(--pgn-color-gray-vue-700);
   }
 
   i {
@@ -295,15 +298,15 @@ ul.pagination {
     height: 40px;
     margin-right: 30px;
     border-radius: 50%;
-    background-color: rgba($purple-800, 10%);
-    color: $purple-800;
+    background-color: rgb(var(--pgn-color-purple-vue-800) / .1);
+    color: var(--pgn-color-purple-vue-800);
   }
 }
 
 .span-filter-counter {
   margin-right: 20px;
   font-weight: 400;
-  color: $primary-800;
+  color: var(--pgn-color-primary-800);
 }
 
 .react-select__menu {
@@ -313,7 +316,7 @@ ul.pagination {
 /* Responsive */
 
 // mobile + tablet
-@media (width < map-get($grid-breakpoints, md)) {
+@media screen and (width <= 767px) {
   .section-content {
     flex-direction: column;
   }
@@ -353,11 +356,7 @@ ul.pagination {
 }
 
 // tablet
-@media (
-  map-get($grid-breakpoints, sm)
-  <= width
-  <= map-get($grid-breakpoints, md)
-) {
+@media screen and (576px <= width <= 767px) {
   .catalog-filters-container {
     width: 50%;
   }
@@ -371,20 +370,19 @@ ul.pagination {
 }
 
 // desktop
-@media (width >= map-get($grid-breakpoints, md)) {
+@media screen and (width >= 768px) {
   .basic-multi-select,
   .mobile-filters {
     display: none;
   }
 
-  
   .main-layout::before {
     background-size: 100% auto;
     background-position: top center;
   }
 }
 
-@media (width >= map-get($grid-breakpoints, lg)) {
+@media screen and (width >= 992px) {
   .search-input-container {
     max-width: 35%;
   }
@@ -400,7 +398,7 @@ ul.pagination {
   }
 }
 
-@media (width >= 1970px) {
+@media screen and (width >= 1970px) {
   .main-layout::before {
     background-position: bottom center;
   }

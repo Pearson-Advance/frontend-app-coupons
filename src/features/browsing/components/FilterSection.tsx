@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import Select from 'react-select';
 import { useIntl } from 'react-intl';
-import { Form, Button, Collapsible } from '@edx/paragon';
+import { Form, Button, Collapsible } from '@openedx/paragon';
 
 import { CatalogItem } from 'shared/types';
 import messages from 'features/browsing/components/messages';

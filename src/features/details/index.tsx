@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { Breadcrumb } from '@edx/paragon';
+import { Breadcrumb } from '@openedx/paragon';
 import { Button } from 'react-paragon-topaz';
 import { useIntl } from 'react-intl';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import { RouteParams } from 'shared/types';
 import PageSkeleton from 'features/details/components/Skeleton';
@@ -14,23 +14,25 @@ import './index.scss';
 
 const Details = () => {
   const intl = useIntl();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { catalogID, courseKey } = useParams<RouteParams>();
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
   const couponCode = params.get('coupon_code');
 
-  const { data, isLoading } = useCourseDetail(catalogID, courseKey, couponCode!);
+  const { data, isLoading } = useCourseDetail(catalogID!, courseKey!, couponCode!);
 
-  const handleBack = () => history.push(`/catalog/${catalogID}/?coupon_code=${couponCode}`);
+  const handleBack = () => navigate(`/catalog/${catalogID}/?coupon_code=${couponCode}`);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   if (isLoading) { return <PageSkeleton />; }
-  if (!data || Object.keys(data).length === 0) { return <ErrorState onBack={handleBack} />; }
+  if (!data || Object.keys(data).length === 0) {
+    return <ErrorState onBack={handleBack} />;
+  }
 
   const hasSidebar = data.duration
     || data.included_materials
@@ -39,8 +41,7 @@ const Details = () => {
 
   return (
     <div className="course-details">
-
-      {/* ── Header ── */}
+      {/* Header */}
       <header className="course-details__header">
         <div className="course-details__header-content">
           <Breadcrumb
@@ -60,35 +61,39 @@ const Details = () => {
           />
 
           <div className="d-flex flex-column flex-md-row w-100 mt-md-2">
-            {data.card_image_url && (<img src={data?.card_image_url} className="course-details__image" alt="Course detail" />)}
+            {data.card_image_url && (
+              <img
+                src={data.card_image_url}
+                className="course-details__image"
+                alt="Course detail"
+              />
+            )}
 
             <div className="w-100">
               {data.vendor && (
                 <p className="course-details__vendor">{data.vendor}</p>
               )}
               {data.title && (
-              <h1 className="course-details__title">{data.title}</h1>
+                <h1 className="course-details__title">{data.title}</h1>
               )}
               {data.enrollment_url && (
-              <Button
-                as="a"
-                href={data.enrollment_url}
-                className="course-details__title-button"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {intl.formatMessage(messages.enrollButton)}
-              </Button>
+                <Button
+                  as="a"
+                  href={data.enrollment_url}
+                  className="course-details__title-button"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {intl.formatMessage(messages.enrollButton)}
+                </Button>
               )}
             </div>
           </div>
         </div>
       </header>
 
-      {/* ── Body ── */}
+      {/* Body */}
       <div className="course-details__body">
-
-        {/* Main content */}
         <main className="course-details__content">
           {data.overview && (
             <section className="course-details__section">
@@ -119,11 +124,9 @@ const Details = () => {
           )}
         </main>
 
-        {/* Sidebar — single card */}
         {hasSidebar && (
           <aside className="course-details__sidebar">
             <div className="course-details__sidebar-card">
-
               {data.duration && (
                 <div className="course-details__sidebar-item">
                   <span className="course-details__sidebar-label">
@@ -145,7 +148,10 @@ const Details = () => {
                   <ul className="course-details__materials-list">
                     {(Array.isArray(data.included_materials)
                       ? data.included_materials
-                      : (data.included_materials).split('\n').map((s: string) => s.trim()).filter(Boolean)
+                      : data.included_materials
+                        .split('\n')
+                        .map((s: string) => s.trim())
+                        .filter(Boolean)
                     ).map((item: string) => (
                       <li key={item}>{item}</li>
                     ))}

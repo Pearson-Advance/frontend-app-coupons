@@ -1,12 +1,12 @@
-@import '~@edx/paragon/scss/core/core';
-@import 'assets/variables';
-
 $bp-lg: 992px;
+$border-radius: 8px;
+$header-height: 76px;
+$footer-height: 142px;
 
 .course-details {
   min-height: calc(100vh - $header-height - $footer-height);
-  background-color: $background-color;
-  color: $black-2;
+  background-color: var(--pgn-color-gray-vue-010);
+  color: var(--pgn-color-black);
   position: relative;
   z-index: 1;
 
@@ -39,11 +39,11 @@ $bp-lg: 992px;
 
   &__breadcrumb-back {
     cursor: pointer;
-    color: $background-color-purple !important;
+    color: var(--pgn-color-primary-base) !important;
   }
 
   &__breadcrumb-current {
-    color: $neutral-700 !important;
+    color: var(--pgn-color-gray-vue-700) !important;
 
     &:hover {
       text-decoration: none;
@@ -65,14 +65,14 @@ $bp-lg: 992px;
     margin-top: 6px;
 
 
-    @media (max-width: map-get($grid-breakpoints, md)) {
+    @media screen and (width <= 768px) {
       display: none;
     }
   }
   // ── Header meta ───────────────────────────────────────────────────────────
 
   &__vendor {
-    color: $neutral-600;
+    color: var(--pgn-color-gray-vue-600);
     text-transform: uppercase;
     margin-bottom: 0;
   }
@@ -83,23 +83,23 @@ $bp-lg: 992px;
 
     &-button.btntpz.btn-primary {
       width: 100%;
-      background: $color-button-bg;
-      color: $black-2;
+      background: var(--pgn-color-yellow-vue-300);
+      color: var(--pgn-color-black);
       border-color: transparent;
       margin-top: 1em;
 
       &:hover {
-        background: $color-button-bg-hover;
+        background: var(--pgn-color-yellow-vue-500);
         border-color: transparent;
-        color: $color-white;
+        color: var(--pgn-color-white);
       }
 
       &:active {
-        background-color: $color-button-bg-hover !important;
+        background-color: var(--pgn-color-yellow-vue-500) !important;
         border: none;
       }
 
-      @media (min-width: map-get($grid-breakpoints, md)) {
+      @media screen and (width >= 768px) {
         width: 25%;
       }
     }
@@ -137,10 +137,10 @@ $bp-lg: 992px;
       font-size: 25px;
     }
 
-    background-color: $white;
+    background-color: var(--pgn-color-white);
     border-radius: $border-radius;
     padding: 20px;
-    border: 1px solid $divider-300;
+    border: 1px solid var(--pgn-color-gray-vue-300);
   }
 
   // ── Sidebar column ────────────────────────────────────────────────────────
@@ -156,9 +156,9 @@ $bp-lg: 992px;
 
   // Single card that wraps all sidebar content
   &__sidebar-card {
-    background-color: $white;
+    background-color: var(--pgn-color-white);
     border-radius: $border-radius;
-    border: 1px solid $divider-300;
+    border: 1px solid var(--pgn-color-gray-vue-300);
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -174,7 +174,7 @@ $bp-lg: 992px;
     // Divider between items (skip the first one)
     & + & {
       padding-top: 1.25em;
-      border-top: 1px solid $divider-300;
+      border-top: 1px solid var(--pgn-color-gray-vue-300);
     }
   }
 
@@ -182,11 +182,11 @@ $bp-lg: 992px;
     text-transform: uppercase;
     font-weight: 600;
     font-size: 12px;
-    color: $neutral-600;
+    color: var(--pgn-color-gray-vue-600);
   }
 
   &__sidebar-value {
-    color: $black-2;
+    color: var(--pgn-color-black);
     font-size: .9em;
     margin-left: 18px;
 
@@ -201,7 +201,7 @@ $bp-lg: 992px;
     margin: 0;
     margin-left: 10px;
     padding-left: 1.25em;
-    color: $black-2;
+    color: var(--pgn-color-black);
     font-size: .9em;
   }
 
@@ -221,7 +221,7 @@ $bp-lg: 992px;
   }
 
   &__error-message {
-    color: $neutral-700;
+    color: var(--pgn-color-gray-vue-700);
     margin-bottom: 1.5em;
   }
 
@@ -240,7 +240,7 @@ $bp-lg: 992px;
   }
 }
 
-@include media-breakpoint-down(md) {
+@media screen and (width <= 767px) {
   .course-details {
     &__title-button.btntpz {
       width: 100%;
@@ -275,7 +275,7 @@ $bp-lg: 992px;
   }
 }
 
-@media (width >= map-get($grid-breakpoints, md)) {
+@media screen and (width >= 768px) {
   .course-details {
     &::before {
       background-position: top left;
@@ -283,7 +283,7 @@ $bp-lg: 992px;
   }
 }
 
-@media (width >= 1970px) {
+@media screen and (width >= 1970px) {
   .course-details {
     &::before {
       background-position: 0 -110px;

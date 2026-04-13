@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Spinner } from '@edx/paragon';
+import { Form, Spinner } from '@openedx/paragon';
 
 import { CatalogContext } from 'app/providers/CatalogProvider';
 import messages from './messages';

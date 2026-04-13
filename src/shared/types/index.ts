@@ -1,11 +1,9 @@
-import { FILTER_ITEM_TYPES } from 'shared/constants';
-
 export type CatalogItem = {
   id: string;
   name: string;
 };
 
-export type ItemType = (typeof FILTER_ITEM_TYPES)[keyof typeof FILTER_ITEM_TYPES];
+export type ItemType = 'topics' | 'vendors';
 
 export type Topic = CatalogItem;
 export type Vendor = CatalogItem;
@@ -59,7 +57,7 @@ export interface CourseDetailResponse {
   enrollment_url?: string;
 }
 
-export interface RouteParams {
+export type RouteParams = {
   catalogID: string;
   courseKey?: string;
-}
+};

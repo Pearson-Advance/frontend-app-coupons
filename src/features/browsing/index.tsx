@@ -4,7 +4,7 @@ import {
   Chip,
   Collapsible,
   Pagination,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import { useIntl } from 'react-intl';
 
 import { CatalogItem, ItemType } from 'shared/types';
