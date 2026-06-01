@@ -4,6 +4,8 @@ import { Button } from 'react-paragon-topaz';
 import { Skeleton } from '@openedx/paragon';
 import { Link, useParams, useLocation } from 'react-router-dom';
 
+import { parseHtml } from 'shared/helpers';
+
 import messages from './messages';
 import './index.scss';
 
@@ -78,7 +80,16 @@ const CourseCard = ({
 
         {duration && (
           <div className="course-card__meta">
-            <span>{isLoading ? <Skeleton width={70} /> : duration}</span>
+            <span>{
+            isLoading ? <Skeleton width={70} />
+              : (
+                <div className="d-flex align-items-center">
+                  <i className="fa-regular fa-clock mr-2" />
+                  {parseHtml(duration)}
+                </div>
+              )
+              }
+            </span>
           </div>
         )}
       </div>

@@ -92,6 +92,10 @@ $border-radius: 8px;
     color: var(--pgn-color-gray-vue-700);
   }
 
+  &__meta p {
+    margin-bottom: 0;
+  }
+
   &__button.btntpz.btn-primary {
     width: 100%;
     background: var(--pgn-color-yellow-vue-300);
