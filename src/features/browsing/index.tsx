@@ -8,18 +8,19 @@ import {
 import { useIntl } from 'react-intl';
 
 import { CatalogItem, ItemType } from 'shared/types';
-import SearchBar from 'features/browsing/components/SearchBar';
 import {
   FILTER_ITEM_TYPES,
   TOPICS,
   VENDORS,
   PAGE_SIZE,
 } from 'shared/constants';
+
+import { CatalogContext } from 'app/providers/CatalogProvider';
+import SearchBar from 'features/browsing/components/SearchBar';
+import CourseCard from 'features/browsing/components/CourseCard';
 import FilterSection from 'features/browsing/components/FilterSection';
 
 import messages from 'features/browsing/messages';
-import { CatalogContext } from 'app/providers/CatalogProvider';
-import CourseCard from 'features/browsing/components/CourseCard';
 import './index.scss';
 
 const RemoveIcon = () => <i className="fa-light fa-xmark" />;
@@ -180,6 +181,7 @@ const Browsing = () => {
               key={course.key}
               title={course.title}
               vendor={course.vendor}
+              duration={course.duration}
               imageUrl={course.card_image_url}
               enrolmentUrl={course.enrollment_url ?? '#'}
               courseKey={course.key}
