@@ -17,6 +17,10 @@ const messages = defineMessages({
     id: 'catalog.results.count',
     defaultMessage: '{start} - {end} of {count} results',
   },
+  rowsPerPage: {
+    id: 'catalog.results.rowsPerPage',
+    defaultMessage: 'Rows per page:',
+  },
   errorTitle: {
     id: 'catalog.results.errorTitle',
     defaultMessage: 'Something went wrong.',
