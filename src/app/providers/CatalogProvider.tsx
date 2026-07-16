@@ -11,12 +11,14 @@ import { useParams, useLocation } from 'react-router-dom';
 
 import useCourses from 'hooks';
 import { CatalogContextType, CatalogItem, RouteParams } from 'shared/types';
+import { PAGE_SIZE } from 'shared/constants';
 
 interface CommittedFilters {
   search: string;
   topics: CatalogItem[];
   vendors: CatalogItem[];
   page: number;
+  pageSize: number;
 }
 
 export const CatalogContext = createContext<CatalogContextType>({
@@ -24,6 +26,7 @@ export const CatalogContext = createContext<CatalogContextType>({
   vendors: [],
   topics: [],
   page: 1,
+  pageSize: PAGE_SIZE,
   data: undefined,
   isLoading: false,
   isError: false,
@@ -32,6 +35,7 @@ export const CatalogContext = createContext<CatalogContextType>({
   setTopics: () => {},
   setVendors: () => {},
   setPage: () => {},
+  setPageSize: () => {},
   clearAll: () => {},
 });
 
@@ -53,6 +57,7 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
     topics: [],
     vendors: [],
     page: 1,
+    pageSize: PAGE_SIZE,
   });
 
   const searchRef = useRef(search);
@@ -86,6 +91,7 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
 
       debounceRef.current = setTimeout(() => {
         setCommitted(prev => ({
+          ...prev,
           search: prev.search,
           topics: filtersRef.current.topics,
           vendors: filtersRef.current.vendors,
@@ -141,6 +147,10 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
     setCommitted(prev => ({ ...prev, page }));
   }, []);
 
+  const setPageSize = useCallback((pageSize: number) => {
+    setCommitted(prev => ({ ...prev, pageSize, page: 1 }));
+  }, []);
+
   const { data, isLoading, isError } = useCourses(
     catalogID,
     couponCodeFromUrl,
@@ -148,6 +158,7 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
     committed.topics,
     committed.vendors,
     committed.page,
+    committed.pageSize,
   );
 
   const value = useMemo(
@@ -156,6 +167,7 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
       vendors: filters.vendors,
       search,
       page: committed.page,
+      pageSize: committed.pageSize,
       data,
       isLoading,
       isError,
@@ -163,6 +175,7 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
       setVendors,
       setSearch,
       setPage,
+      setPageSize,
       commitSearch,
       clearAll: handleClearAll,
     }),
@@ -170,12 +183,14 @@ export const CatalogProvider = ({ children }: { children: ReactNode }) => {
       filters,
       search,
       committed.page,
+      committed.pageSize,
       data,
       isLoading,
       isError,
       setTopics,
       setVendors,
       setPage,
+      setPageSize,
       commitSearch,
       handleClearAll,
     ],

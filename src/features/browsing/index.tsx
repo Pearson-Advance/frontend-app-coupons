@@ -12,7 +12,7 @@ import {
   FILTER_ITEM_TYPES,
   TOPICS,
   VENDORS,
-  PAGE_SIZE,
+  PAGE_SIZE_OPTIONS,
 } from 'shared/constants';
 
 import { CatalogContext } from 'app/providers/CatalogProvider';
@@ -31,12 +31,14 @@ const Browsing = () => {
     topics,
     vendors,
     page,
+    pageSize,
     data,
     isLoading,
     isError,
     setTopics,
     setVendors,
     setPage,
+    setPageSize,
     clearAll,
   } = useContext(CatalogContext);
 
@@ -54,10 +56,10 @@ const Browsing = () => {
   };
 
   const totalCount = data?.count ?? 0;
-  const pageCount = totalCount > 0 ? Math.ceil(totalCount / PAGE_SIZE) : 0;
+  const pageCount = totalCount > 0 ? Math.ceil(totalCount / pageSize) : 0;
   const hasNavigation = pageCount > 1;
-  const start = totalCount > 0 ? (page - 1) * PAGE_SIZE + 1 : 0;
-  const end = Math.min(page * PAGE_SIZE, totalCount);
+  const start = totalCount > 0 ? (page - 1) * pageSize + 1 : 0;
+  const end = Math.min(page * pageSize, totalCount);
 
   const renderFilters = () => (
     <>
@@ -190,6 +192,25 @@ const Browsing = () => {
 
           {!isLoading && !isError && hasNavigation && (
             <div className="pagination-container">
+              <div className="rows-per-page">
+                <label htmlFor="rows-per-page-select">
+                  {intl.formatMessage(messages.rowsPerPage)}
+                </label>
+                <select
+                  id="rows-per-page-select"
+                  className="form-select"
+                  value={pageSize}
+                  onChange={(event) => {
+                    setPageSize(Number(event.target.value));
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                >
+                  {PAGE_SIZE_OPTIONS.map((size) => (
+                    <option key={size} value={size}>{size}</option>
+                  ))}
+                </select>
+              </div>
+
               <Pagination
                 className="mb-0"
                 paginationLabel="pagination navigation"

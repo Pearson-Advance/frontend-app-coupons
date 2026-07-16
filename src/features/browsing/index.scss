@@ -248,15 +248,29 @@ $footer-height: 142px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 1.5em;
   margin: 1em 0;
   padding: 1em;
   background-color: var(--pgn-color-white);
   border-top: 1px solid var(--pgn-color-gray-vue-300);
 }
 
-.form-select {
-  border: none;
-  margin-left: 10px;
+.rows-per-page {
+  display: flex;
+  align-items: center;
+
+  label {
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .form-select {
+    width: auto;
+    border: none;
+    font-size: 14px;
+    margin-left: 10px;
+  }
 }
 
 ul.pagination {

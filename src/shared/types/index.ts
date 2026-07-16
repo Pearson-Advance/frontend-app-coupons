@@ -13,6 +13,7 @@ export interface CatalogContextType {
   vendors: CatalogItem[];
   topics: CatalogItem[];
   page: number;
+  pageSize: number;
   data: any | undefined;
   isLoading: boolean;
   isError: boolean;
@@ -21,6 +22,7 @@ export interface CatalogContextType {
   setTopics: (items: CatalogItem[] | ((prev: CatalogItem[]) => CatalogItem[])) => void;
   setVendors: (items: CatalogItem[] | ((prev: CatalogItem[]) => CatalogItem[])) => void;
   setPage: (page: number) => void;
+  setPageSize: (size: number) => void;
   clearAll: () => void;
 }
 
