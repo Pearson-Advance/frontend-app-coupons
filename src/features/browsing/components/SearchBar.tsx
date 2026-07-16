@@ -52,7 +52,12 @@ const SearchBar = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+    const { value } = e.target;
+    setSearch(value);
+
+    if (value.trim().length === 0) {
+      commitSearch('');
+    }
   };
 
   const submitSearch = (e: React.FormEvent) => {
