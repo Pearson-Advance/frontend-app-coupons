@@ -194,7 +194,7 @@ const Browsing = () => {
             <div className="pagination-container">
               <div className="rows-per-page">
                 <label htmlFor="rows-per-page-select">
-                  {intl.formatMessage(messages.rowsPerPage)}
+                  {intl.formatMessage(messages.coursesPerPage)}
                 </label>
                 <select
                   id="rows-per-page-select"
